@@ -31,3 +31,8 @@ aws-setup-notes/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Private planning docs (kept out of the public repo)
+PLAN.md
+PLAN.docx
+~$*
