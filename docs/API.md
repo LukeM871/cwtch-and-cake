@@ -81,7 +81,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 **Opening hours:**
 - Monday–Friday: 08:00–20:00
 - Saturday and Sunday: 09:00–18:00
-- During exam season the café is open until 22:00 on weekdays. That's website content only; no extra booking slots.
+- **Exam season (weekdays only): open until 21:00.** Weekend hours stay the same. This is website content only; no extra booking slots.
 
 | Booking `type` | What | Days | Start times | Length | `partySize` | Capacity per slot | What the capacity counts |
 |---|---|---|---|---|---|---|---|
