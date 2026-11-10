@@ -1,0 +1,88 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "lambdas/**"
+      - "scripts/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {} # "Run workflow" button in the Actions tab
+
+# Never run two deploys at the same time; a newer push waits for the older one.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # docs/SECURITY.md §2: the CSP blocks inline code, so catch it before deploying.
+      - name: No inline scripts, styles or event handlers in HTML
+        run: |
+          set -e
+          bad=0
+          if grep -rnE '<script(\s[^>]*)?>' site --include='*.html' | grep -v 'src='; then echo "::error::Inline <script> found"; bad=1; fi
+          if grep -rnE '<style[ >]' site --include='*.html'; then echo "::error::<style> block found"; bad=1; fi
+          if grep -rnE '\sstyle=' site --include='*.html'; then echo "::error::style=\"\" attribute found"; bad=1; fi
+          if grep -rnEi '\son[a-z]+=' site --include='*.html'; then echo "::error::Inline event handler (onclick etc.) found"; bad=1; fi
+          exit $bad
+
+      - name: Set up Python
+        if: hashFiles('lambdas/**/*.py') != ''
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Run Lambda unit tests
+        if: hashFiles('lambdas/**/*.py') != ''
+        run: |
+          pip install -r lambdas/requirements-dev.txt
+          pytest -q lambdas
+
+  deploy:
+    name: Deploy to S3 + CloudFront
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # lets the job ask GitHub for an OIDC token
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Get temporary AWS credentials (OIDC, no stored keys)
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: eu-west-2
+          role-session-name: github-deploy-${{ github.run_id }}
+
+      - name: Upload files (CSS, images, fonts...)
+        run: >
+          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/"
+          --delete --exclude "*.html"
+          --cache-control "public, max-age=3600"
+
+      - name: Upload pages (HTML, always revalidated)
+        run: >
+          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/"
+          --exclude "*" --include "*.html"
+          --cache-control "no-cache"
+
+      - name: Clear CloudFront cache
+        run: |
+          id=$(aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*" --query Invalidation.Id --output text)
+          echo "Invalidation $id started"
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" --id "$id"
+          echo "✅ Live: https://d37nt89jw5nszl.cloudfront.net"

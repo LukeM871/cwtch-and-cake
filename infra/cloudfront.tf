@@ -127,7 +127,9 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
+    # The shared *.cloudfront.net certificate doesn't allow choosing a minimum
+    # TLS version (AWS fixes it). With a custom domain + ACM cert this becomes
+    # minimum_protocol_version = "TLSv1.2_2021".
     cloudfront_default_certificate = true
-    minimum_protocol_version       = "TLSv1.2_2021"
   }
 }

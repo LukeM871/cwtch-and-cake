@@ -42,8 +42,10 @@ body {
 .logo .sleeve { fill: var(--daffodil); }
 .logo .heart { fill: var(--daffodil); }
 .logo .steam { fill: none; stroke: var(--golden); stroke-width: 3; stroke-linecap: round; }
-.logo .cake { fill: var(--golden); stroke: var(--espresso); stroke-width: 2.5; }
-.logo .dot { fill: var(--espresso); }
+.logo .cake { fill: #e2b26a; stroke: var(--espresso); stroke-width: 2.2; stroke-linejoin: round; }
+.logo .griddle { fill: var(--golden); opacity: 0.75; }
+.logo .currant { fill: #3a1f14; }
+.logo .sugar { fill: #fffaf2; }
 
 h1 {
   margin: 0 0 8px;
