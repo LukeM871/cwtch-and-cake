@@ -6,10 +6,13 @@
 # hands out temporary credentials for the deploy role below.
 # -----------------------------------------------------------------------------
 
-variable "github_repo" {
-  description = "owner/name of the GitHub repo allowed to deploy."
+# GitHub's "immutable" subject format: owner@ownerId/repo@repoId. The numeric
+# IDs never change, so a renamed or re-created repo with the same name can't
+# reuse this trust. Value from: gh api repos/<owner>/<repo>/actions/oidc/customization/sub
+variable "github_oidc_sub_prefix" {
+  description = "OIDC subject prefix of the repo allowed to deploy."
   type        = string
-  default     = "LukeM871/cwtch-and-cake"
+  default     = "repo:LukeM871@186709624/cwtch-and-cake@1452962527"
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
@@ -37,7 +40,7 @@ data "aws_iam_policy_document" "deploy_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/main"]
+      values   = ["${var.github_oidc_sub_prefix}:ref:refs/heads/main"]
     }
   }
 }
