@@ -44,3 +44,6 @@ screenshots/
 
 # Local helper scripts (md -> Word, terminal screenshots)
 .local-tools/
+
+# Terraform build output (Lambda zip)
+infra/.build/

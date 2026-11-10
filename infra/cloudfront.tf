@@ -27,6 +27,37 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
   name = "Managed-CachingOptimized"
 }
 
+# API caching: off unless the Lambda says otherwise (availability sends
+# "max-age=30"). Query strings are part of the cache key so each day/type is
+# cached separately.
+resource "aws_cloudfront_cache_policy" "api" {
+  name        = "${var.project}-api"
+  comment     = "Respect Cache-Control from the API; never cache by default"
+  min_ttl     = 0
+  default_ttl = 0
+  max_ttl     = 60
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    enable_accept_encoding_gzip   = true
+    enable_accept_encoding_brotli = true
+    query_strings_config {
+      query_string_behavior = "all"
+    }
+    headers_config {
+      header_behavior = "none"
+    }
+    cookies_config {
+      cookie_behavior = "none"
+    }
+  }
+}
+
+# AWS-managed: forward everything the browser sent except the Host header
+# (API Gateway needs its own Host).
+data "aws_cloudfront_origin_request_policy" "all_except_host" {
+  name = "Managed-AllViewerExceptHostHeader"
+}
+
 # Origin Access Control: CloudFront signs its requests to S3, so the bucket
 # can stay fully private.
 resource "aws_cloudfront_origin_access_control" "site" {
@@ -94,6 +125,36 @@ resource "aws_cloudfront_distribution" "site" {
     origin_access_control_id = aws_cloudfront_origin_access_control.site.id
   }
 
+  origin {
+    origin_id   = "api"
+    domain_name = replace(aws_apigatewayv2_api.api.api_endpoint, "https://", "")
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+
+    # Proves the request came through CloudFront (docs/SECURITY.md section 3).
+    custom_header {
+      name  = "x-origin-verify"
+      value = random_password.origin_secret.result
+    }
+  }
+
+  ordered_cache_behavior {
+    path_pattern               = "/api/*"
+    target_origin_id           = "api"
+    viewer_protocol_policy     = "https-only"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods             = ["GET", "HEAD"]
+    compress                   = true
+    cache_policy_id            = aws_cloudfront_cache_policy.api.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.all_except_host.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
+  }
+
   default_cache_behavior {
     target_origin_id           = "site-s3"
     viewer_protocol_policy     = "redirect-to-https"
@@ -104,17 +165,12 @@ resource "aws_cloudfront_distribution" "site" {
     response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
   }
 
-  # S3 answers 403 (not 404) for missing files when the bucket is private,
-  # so both are turned into our friendly 404 page.
+  # A private S3 bucket answers 403 (not 404) for a missing file; show the
+  # friendly 404 page instead. Error pages apply to EVERY origin, so 404 is
+  # deliberately NOT mapped: the API's JSON 404 ("booking not found") must reach
+  # the browser untouched. The API never returns 403 through CloudFront.
   custom_error_response {
     error_code            = 403
-    response_code         = 404
-    response_page_path    = "/404.html"
-    error_caching_min_ttl = 60
-  }
-
-  custom_error_response {
-    error_code            = 404
     response_code         = 404
     response_page_path    = "/404.html"
     error_caching_min_ttl = 60

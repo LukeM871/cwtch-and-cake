@@ -1,0 +1,67 @@
+# -----------------------------------------------------------------------------
+# DynamoDB tables for bookings (docs/API.md section 9). On-demand = pay per request.
+# -----------------------------------------------------------------------------
+
+resource "aws_dynamodb_table" "bookings" {
+  name         = "${var.project}-bookings"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "pk"
+
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+  attribute {
+    name = "date"
+    type = "S"
+  }
+  attribute {
+    name = "time"
+    type = "S"
+  }
+
+  # For the admin page (Phase 5): one day's bookings, sorted by time.
+  global_secondary_index {
+    name            = "by-date"
+    projection_type = "ALL"
+
+    key_schema {
+      attribute_name = "date"
+      key_type       = "HASH"
+    }
+    key_schema {
+      attribute_name = "time"
+      key_type       = "RANGE"
+    }
+  }
+
+  # Personal data deletes itself 30 days after the booking date.
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+
+  server_side_encryption {
+    enabled = true # AWS-owned key is used when no KMS key is given (free)
+  }
+
+  point_in_time_recovery {
+    enabled = false # keeps it free; bookings are short-lived anyway
+  }
+}
+
+resource "aws_dynamodb_table" "slots" {
+  name         = "${var.project}-slots"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "pk"
+
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}

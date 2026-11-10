@@ -1,0 +1,4 @@
+# Test-only dependencies (the Lambda runtime already includes boto3).
+pytest==8.*
+moto[dynamodb,ses]==5.*
+boto3

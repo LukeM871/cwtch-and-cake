@@ -44,12 +44,13 @@ jobs:
 
       - name: Run Lambda unit tests
         if: hashFiles('lambdas/**/*.py') != ''
+        working-directory: lambdas
         run: |
-          pip install -r lambdas/requirements-dev.txt
-          pytest -q lambdas
+          pip install -r requirements-dev.txt
+          pytest -v
 
   deploy:
-    name: Deploy to S3 + CloudFront
+    name: Deploy (Lambdas, S3, CloudFront)
     needs: checks
     runs-on: ubuntu-latest
     permissions:
@@ -64,6 +65,18 @@ jobs:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: eu-west-2
           role-session-name: github-deploy-${{ github.run_id }}
+
+      - name: Deploy Lambda code
+        run: |
+          cd lambdas/src
+          zip -qr ../../lambda.zip . -x '*__pycache__*'
+          cd ../..
+          for fn in create-booking cancel-booking get-availability; do
+            aws lambda update-function-code --function-name "cwtch-and-cake-$fn" \
+              --zip-file fileb://lambda.zip --query 'LastUpdateStatus' --output text
+            aws lambda wait function-updated --function-name "cwtch-and-cake-$fn"
+            echo "✅ cwtch-and-cake-$fn updated"
+          done
 
       - name: Upload files (CSS, images, fonts...)
         run: >

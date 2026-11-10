@@ -53,7 +53,7 @@ resource "aws_iam_role" "deploy" {
 }
 
 # Least privilege: sync files to the one site bucket, clear the one
-# distribution's cache. Nothing else. (Lambda deploy rights are added in Phase 3.)
+# distribution's cache. Nothing else. (Plus uploading code to the project Lambdas.)
 data "aws_iam_policy_document" "deploy_permissions" {
   statement {
     sid       = "ListSiteBucket"
@@ -71,6 +71,14 @@ data "aws_iam_policy_document" "deploy_permissions" {
     sid       = "InvalidateCache"
     actions   = ["cloudfront:CreateInvalidation", "cloudfront:GetInvalidation"]
     resources = [aws_cloudfront_distribution.site.arn]
+  }
+
+  # Upload new code to the project's Lambdas only. It can't change their
+  # permissions, settings or environment variables.
+  statement {
+    sid       = "DeployLambdaCode"
+    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunctionConfiguration"]
+    resources = [for f in aws_lambda_function.fn : f.arn]
   }
 }
 

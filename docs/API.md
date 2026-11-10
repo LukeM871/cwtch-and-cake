@@ -85,7 +85,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 
 | Booking `type` | What | Days | Start times | Length | `partySize` | Capacity per slot | What the capacity counts |
 |---|---|---|---|---|---|---|---|
-| `class` | Latte art or Welsh cake baking class | **Saturdays only** | `10:00`, `14:00` | 90 min | 1–4 | **8 places** | people |
+| `class` | `10:00` = **latte art**, `14:00` = **Welsh cake baking** | **Saturdays only** | `10:00`, `14:00` | 90 min | 1–4 | **8 places** | people |
 | `room` | Group study room | Every day | Weekdays: `08:00 10:00 12:00 14:00 16:00 18:00`. Weekends: `10:00 12:00 14:00 16:00` | 2 h | 2–6 | **2 rooms** | rooms (1 per booking) |
 | `group` | Big society or group table | Every day | Same as `room` | 2 h | 5–20 | **1 table** | tables (1 per booking) |
 
@@ -117,7 +117,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 | Field | Required | Rules |
 |---|---|---|
 | `type` | ✅ | `class` · `room` · `group` |
-| `classKind` | for `class` | `latte-art` · `welsh-cakes` (ignored for other types) |
+| `classKind` | ❌ | Optional. Set automatically from the time (10:00 = `latte-art`, 14:00 = `welsh-cakes`). If it's sent, it must match the time |
 | `date` | ✅ | Valid date, today up to 60 days ahead. A `class` must be on a Saturday |
 | `time` | ✅ | One of the start times in §3 for that type and day |
 | `partySize` | ✅ | Whole number in the range for that type (§3) |
@@ -186,6 +186,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
   ]
 }
 ```
+- For `type=class`, each slot also has `"classKind"` (`latte-art` or `welsh-cakes`).
 - Today's slots that start in under 30 minutes are left out.
 - If the type isn't available that day (a `class` on a non-Saturday) → `slots: []`.
 - Cached for 30 seconds, so the numbers can be up to 30 seconds old. The booking transaction is always the final check.
