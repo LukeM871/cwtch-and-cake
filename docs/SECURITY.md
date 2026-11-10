@@ -22,6 +22,7 @@ CloudFront adds these through a **response headers policy**, so they apply to ev
 | `Cross-Origin-Opener-Policy` | `same-origin` | Other sites getting a handle on our window |
 
 Add `preload` to HSTS only if a custom domain is added later. The `cloudfront.net` address can't be preloaded.
+The same goes for the **minimum TLS version**: the shared `*.cloudfront.net` certificate has a fixed AWS-managed setting. With a custom domain and an ACM certificate, set `TLSv1.2_2021`.
 
 **Target:** an **A+** on securityheaders.com and a top grade on Mozilla Observatory.
 
@@ -138,7 +139,7 @@ Too many requests get `429`, and the website shows "Busy right now, try again in
 
 ## 8. Secrets and credentials
 
-- **No AWS keys anywhere in the repo or in GitHub.** GitHub Actions uses **OIDC** to get short-lived credentials for one role, and only from the `main` branch of this repo.
+- **No AWS keys anywhere in the repo or in GitHub.** GitHub Actions uses **OIDC** to get short-lived credentials for one role, and only from the `main` branch of this repo. The trust matches GitHub's **immutable subject** (owner and repo numeric IDs), so a renamed or re-created repo can't inherit it.
 - On the laptop, `aws login` gives short-lived credentials.
 - `.gitignore` blocks: `*.tfstate*`, `*.tfvars`, `.env*`, `*.pem`, `*.key`, personal notes and plans.
 - Before the repo is made public (Phase 8), scan the whole history with `gitleaks`.
