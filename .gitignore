@@ -41,3 +41,6 @@ HOW-ITS-BUILT.docx
 
 # Raw screenshots for LinkedIn (private; the best ones get copied to docs/)
 screenshots/
+
+# Local helper scripts (md -> Word, terminal screenshots)
+.local-tools/
