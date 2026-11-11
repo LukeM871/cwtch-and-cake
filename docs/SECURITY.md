@@ -84,13 +84,15 @@ Every Lambda has **its own IAM role** and can do **only** what's listed. Anythin
 | `create-booking` | `dynamodb:PutItem`, `dynamodb:UpdateItem` (inside one transaction); `ses:SendEmail` | bookings table, slots table; the one SES sender identity |
 | `cancel-booking` | `dynamodb:DeleteItem`, `dynamodb:UpdateItem` (inside one transaction), `dynamodb:GetItem`; `ses:SendEmail` | bookings table, slots table; SES sender |
 | `get-availability` | `dynamodb:BatchGetItem` | slots table |
-| `get-status` | `dynamodb:GetItem` | café table |
-| `get-menu` | `dynamodb:Query` | café table |
+| `get-status` | `dynamodb:GetItem` | café table, **status row only** (`dynamodb:LeadingKeys` = `status`) |
+| `get-menu` | `dynamodb:Query` | café table, **menu and deals only** (`dynamodb:LeadingKeys` = `menu` or `deal`) |
 | `create-review` | `dynamodb:GetItem` (bookings), `dynamodb:PutItem` (reviews), `dynamodb:UpdateItem` (bookings: mark as reviewed); `comprehend:DetectToxicContent` | bookings and reviews tables |
 | `list-reviews` | `dynamodb:Query` | reviews table **status index only** |
 | `admin` | `dynamodb:Query`, `GetItem`, `UpdateItem` | reviews, café, bookings (date index) tables |
 
-**Proof (Phase 6):** the IAM Policy Simulator shows, for example, that `get-menu` **can't** read bookings.
+**Partition-level locks:** `get-status` and `get-menu` share the café table, so their policies also have an IAM condition on `dynamodb:LeadingKeys` (the partition key being read). `get-menu` can't read the status row, and `get-status` can't read the menu.
+
+**Proof:** the IAM Policy Simulator (checked 11 Nov 2026) shows `get-menu` → `Query` on `pk = menu` or `deal` is **allowed**, but `pk = status`, any `GetItem`/`PutItem`, and the bookings table are all **denied**. `get-status` → `GetItem` on `pk = status` is **allowed**, but the menu rows, any write and the bookings table are **denied**.
 
 ---
 

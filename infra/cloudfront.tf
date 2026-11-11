@@ -27,15 +27,15 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
   name = "Managed-CachingOptimized"
 }
 
-# API caching: off unless the Lambda says otherwise (availability sends
-# "max-age=30"). Query strings are part of the cache key so each day/type is
-# cached separately.
+# API caching: off unless the Lambda says otherwise (availability and status
+# send "max-age=30", the menu "max-age=300"). Query strings are part of the
+# cache key so each day/type is cached separately.
 resource "aws_cloudfront_cache_policy" "api" {
   name        = "${var.project}-api"
   comment     = "Respect Cache-Control from the API; never cache by default"
   min_ttl     = 0
   default_ttl = 0
-  max_ttl     = 60
+  max_ttl     = 300 # the menu's 5 minutes is the longest any API response is kept
 
   parameters_in_cache_key_and_forwarded_to_origin {
     enable_accept_encoding_gzip   = true

@@ -14,6 +14,8 @@ locals {
     "POST /api/booking"        = { fn = "create-booking", rate = 3, burst = 5 }
     "POST /api/booking/cancel" = { fn = "cancel-booking", rate = 3, burst = 5 }
     "GET /api/availability"    = { fn = "get-availability", rate = 10, burst = 20 }
+    "GET /api/status"          = { fn = "get-status", rate = 10, burst = 20 }
+    "GET /api/menu"            = { fn = "get-menu", rate = 10, burst = 20 }
   }
 }
 

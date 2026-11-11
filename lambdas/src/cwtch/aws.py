@@ -23,6 +23,10 @@ def slots_table() -> str:
     return os.environ["SLOTS_TABLE"]
 
 
+def cafe_table() -> str:
+    return os.environ["CAFE_TABLE"]
+
+
 def reset_clients() -> None:
     """Used by tests so each test gets fresh (mocked) clients."""
     dynamodb.cache_clear()

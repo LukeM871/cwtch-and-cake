@@ -23,6 +23,7 @@ def env(monkeypatch):
     monkeypatch.setenv("AWS_SECRET_ACCESS_KEY", "testing")
     monkeypatch.setenv("BOOKINGS_TABLE", "bookings")
     monkeypatch.setenv("SLOTS_TABLE", "slots")
+    monkeypatch.setenv("CAFE_TABLE", "cafe")
     monkeypatch.setenv("ORIGIN_SECRET", SECRET)
     monkeypatch.setenv("SITE_URL", "https://example.cloudfront.net")
     monkeypatch.setenv("SENDER_EMAIL", "")
@@ -41,6 +42,15 @@ def fake_aws(env):
                 AttributeDefinitions=[{"AttributeName": "pk", "AttributeType": "S"}],
                 BillingMode="PAY_PER_REQUEST",
             )
+        ddb.create_table(
+            TableName="cafe",
+            KeySchema=[{"AttributeName": "pk", "KeyType": "HASH"}, {"AttributeName": "sk", "KeyType": "RANGE"}],
+            AttributeDefinitions=[
+                {"AttributeName": "pk", "AttributeType": "S"},
+                {"AttributeName": "sk", "AttributeType": "S"},
+            ],
+            BillingMode="PAY_PER_REQUEST",
+        )
         yield ddb
         aws.reset_clients()
 

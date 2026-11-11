@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# Booking Lambdas: one function and one IAM role per job (least privilege).
+# API Lambdas: one function and one IAM role per job (least privilege).
 #
 # Terraform creates the functions with the first code bundle. After that,
 # GitHub Actions deploys new code on every push (so Terraform ignores code changes).
@@ -34,6 +34,7 @@ locals {
   table_arns = {
     bookings = aws_dynamodb_table.bookings.arn
     slots    = aws_dynamodb_table.slots.arn
+    cafe     = aws_dynamodb_table.cafe.arn
   }
 
   ses_statement = var.sender_email == "" ? [] : [{
@@ -43,6 +44,9 @@ locals {
   }]
 
   # docs/SECURITY.md section 4: exactly these actions, nothing else.
+  # leading_keys (optional) limits a statement to rows with those partition
+  # keys, so get-status can only read the status row and get-menu only the
+  # menu and deals, even though they share the café table.
   functions = {
     create-booking = {
       handler = "create_booking.handler"
@@ -64,6 +68,20 @@ locals {
       handler = "get_availability.handler"
       dynamo = [
         { actions = ["dynamodb:BatchGetItem"], resources = [local.table_arns.slots] },
+      ]
+      ses = false
+    }
+    get-status = {
+      handler = "get_status.handler"
+      dynamo = [
+        { actions = ["dynamodb:GetItem"], resources = [local.table_arns.cafe], leading_keys = ["status"] },
+      ]
+      ses = false
+    }
+    get-menu = {
+      handler = "get_menu.handler"
+      dynamo = [
+        { actions = ["dynamodb:Query"], resources = [local.table_arns.cafe], leading_keys = ["menu", "deal"] },
       ]
       ses = false
     }
@@ -100,6 +118,15 @@ data "aws_iam_policy_document" "fn" {
     content {
       actions   = statement.value.actions
       resources = statement.value.resources
+
+      dynamic "condition" {
+        for_each = length(try(statement.value.leading_keys, [])) > 0 ? [1] : []
+        content {
+          test     = "ForAllValues:StringEquals"
+          variable = "dynamodb:LeadingKeys"
+          values   = statement.value.leading_keys
+        }
+      }
     }
   }
 
@@ -147,6 +174,7 @@ resource "aws_lambda_function" "fn" {
     variables = {
       BOOKINGS_TABLE = aws_dynamodb_table.bookings.name
       SLOTS_TABLE    = aws_dynamodb_table.slots.name
+      CAFE_TABLE     = aws_dynamodb_table.cafe.name
       ORIGIN_SECRET  = random_password.origin_secret.result
       SENDER_EMAIL   = var.sender_email
       SITE_URL       = var.site_url

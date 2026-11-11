@@ -65,3 +65,29 @@ resource "aws_dynamodb_table" "slots" {
     enabled        = true
   }
 }
+
+# Café content: the busy status, the menu and the deals (docs/API.md section 9).
+# pk + sk so the whole menu, in display order, is one Query on pk = "menu".
+resource "aws_dynamodb_table" "cafe" {
+  name         = "${var.project}-cafe"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "pk"
+  range_key    = "sk"
+
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+  attribute {
+    name = "sk"
+    type = "S"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false # the menu can be rebuilt any time with scripts/seed_menu.py
+  }
+}

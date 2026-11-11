@@ -1,0 +1,145 @@
+{
+  "currency": "GBP",
+  "sections": [
+    {
+      "id": "hot-coffee",
+      "title": "Hot coffee",
+      "sizes": { "regular": "240ml", "large": "350ml" },
+      "items": [
+        { "id": "espresso", "name": "Espresso (double)", "prices": { "regular": 240 }, "tags": ["VG"], "allergens": [] },
+        { "id": "americano", "name": "Americano", "prices": { "regular": 300, "large": 340 }, "tags": ["VG"], "allergens": [] },
+        { "id": "flat-white", "name": "Flat white", "prices": { "regular": 340 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "latte", "name": "Latte", "prices": { "regular": 350, "large": 390 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "cappuccino", "name": "Cappuccino", "prices": { "regular": 350, "large": 390 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "mocha", "name": "Mocha", "prices": { "regular": 380, "large": 420 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "flavoured-latte", "name": "Caramel, vanilla or hazelnut latte", "prices": { "regular": 390, "large": 430 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "chai-latte", "name": "Chai latte", "prices": { "regular": 360, "large": 400 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "hot-chocolate", "name": "Hot chocolate", "description": "Add cream and marshmallows for 50p", "prices": { "regular": 330, "large": 370 }, "tags": ["V"], "allergens": ["milk"] }
+      ]
+    },
+    {
+      "id": "iced",
+      "title": "Iced and cold drinks",
+      "sizes": { "regular": "350ml", "large": "470ml" },
+      "note": "Bigger cups, to leave room for the ice",
+      "items": [
+        { "id": "iced-latte", "name": "Iced latte", "prices": { "regular": 380, "large": 420 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "iced-americano", "name": "Iced americano", "prices": { "regular": 330, "large": 370 }, "tags": ["VG"], "allergens": [] },
+        { "id": "iced-flavoured-latte", "name": "Iced caramel or vanilla latte", "prices": { "regular": 420, "large": 460 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "iced-mocha", "name": "Iced mocha", "prices": { "regular": 410, "large": 450 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "cold-brew", "name": "Cold brew", "prices": { "regular": 380, "large": 420 }, "tags": ["VG"], "allergens": [] },
+        { "id": "iced-chai-latte", "name": "Iced chai latte", "prices": { "regular": 390, "large": 430 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "iced-matcha-latte", "name": "Iced matcha latte", "prices": { "regular": 420, "large": 460 }, "tags": ["V", "VG-available"], "allergens": ["milk"] }
+      ]
+    },
+    {
+      "id": "tea-and-others",
+      "title": "Tea and others",
+      "items": [
+        { "id": "builders-tea", "name": "Builder's tea", "description": "A proper paned", "prices": { "each": 220 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "herbal-tea", "name": "Earl Grey, green, peppermint or chamomile", "prices": { "each": 260 }, "tags": ["VG"], "allergens": [] },
+        { "id": "matcha-latte", "name": "Matcha latte", "description": "Served hot", "prices": { "each": 390 }, "tags": ["V", "VG-available"], "allergens": ["milk"] },
+        { "id": "orange-juice", "name": "Fresh orange juice", "prices": { "each": 280 }, "tags": ["VG"], "allergens": [] },
+        { "id": "sparkling-water", "name": "Sparkling water", "prices": { "each": 180 }, "tags": ["VG"], "allergens": [] }
+      ]
+    },
+    {
+      "id": "welsh-cakes",
+      "title": "Welsh cakes",
+      "note": "Baked fresh every morning",
+      "offers": [
+        { "label": "Any 3", "price": 300 },
+        { "label": "Box of 6", "price": 550 }
+      ],
+      "items": [
+        { "id": "classic", "name": "Classic", "description": "Raisins and sultanas, dusted with sugar. The original", "prices": { "each": 90 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "chocolate-chip", "name": "Chocolate chip", "description": "Milk chocolate chips", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg", "soya"] },
+        { "id": "white-chocolate-chip", "name": "White chocolate chip", "description": "Creamy white chocolate chips", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg", "soya"] },
+        { "id": "double-chocolate", "name": "Double chocolate", "description": "Cocoa dough plus chocolate chips", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg", "soya"] },
+        { "id": "white-chocolate-raspberry", "name": "White chocolate & raspberry", "description": "Sweet and a bit sharp", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg", "soya"] },
+        { "id": "lemon-blueberry", "name": "Lemon & blueberry", "description": "Light and fruity", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "cinnamon-sugar", "name": "Cinnamon sugar", "description": "Warm and simple", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "salted-caramel", "name": "Salted caramel", "description": "Caramel pieces with a pinch of sea salt", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "vegan-classic", "name": "Vegan classic", "description": "The original, made with plant butter", "prices": { "each": 90 }, "tags": ["VG"], "allergens": ["gluten"] },
+        { "id": "seasonal-special", "name": "Seasonal special", "description": "Pumpkin spice in autumn, mince pie at Christmas, Easter egg in spring", "prices": { "each": 110 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] }
+      ]
+    },
+    {
+      "id": "bakes",
+      "title": "Other bakes",
+      "items": [
+        { "id": "bara-brith", "name": "Bara brith slice", "description": "With butter", "prices": { "each": 280 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "welsh-cake-sandwich", "name": "Welsh cake sandwich", "description": "Two Welsh cakes with jam and cream", "prices": { "each": 320 }, "tags": ["V"], "allergens": ["gluten", "milk", "egg"] },
+        { "id": "ham-cheese-toastie", "name": "Cheese and ham toastie", "prices": { "each": 550 }, "tags": ["GF-available"], "allergens": ["gluten", "milk"] },
+        { "id": "leek-cheese-toastie", "name": "Cheese and Welsh leek toastie", "prices": { "each": 550 }, "tags": ["V", "GF-available"], "allergens": ["gluten", "milk"] }
+      ]
+    },
+    {
+      "id": "extras",
+      "title": "Extras",
+      "items": [
+        { "id": "plant-milk", "name": "Oat, soy or almond milk", "description": "No extra charge: a student perk (most cafés charge 30-50p)", "prices": { "each": 0 }, "tags": ["VG"], "allergens": ["soya", "nuts"] },
+        { "id": "extra-shot", "name": "Extra espresso shot", "prices": { "each": 60 }, "tags": ["VG"], "allergens": [] },
+        { "id": "syrup", "name": "Syrup", "description": "Caramel, vanilla or hazelnut", "prices": { "each": 50 }, "tags": ["VG"], "allergens": [] },
+        { "id": "cream-marshmallows", "name": "Cream and marshmallows", "description": "On a hot chocolate", "prices": { "each": 50 }, "tags": [], "allergens": ["milk"] }
+      ]
+    }
+  ],
+  "deals": [
+    {
+      "id": "cwtch-deal",
+      "name": "The Cwtch Deal",
+      "description": "Any regular latte, cappuccino, flat white or flavoured latte, hot or iced, plus 2 Welsh cakes",
+      "price": 480,
+      "normalPrice": { "from": 520, "to": 640 },
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "exam-fuel",
+      "name": "Exam Fuel",
+      "description": "Any large coffee, hot or iced, plus any 3 Welsh cakes",
+      "price": 580,
+      "normalPrice": { "from": 640, "to": 760 },
+      "when": "Exam season only",
+      "season": "exam",
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "early-lecture-cuppa",
+      "name": "Early Lecture Cuppa",
+      "description": "Builder's tea or americano plus a classic Welsh cake",
+      "price": 280,
+      "normalPrice": { "from": 310, "to": 390 },
+      "when": "Before 10am",
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "study-session",
+      "name": "Study Session",
+      "description": "A regular americano with free refills for 2 hours",
+      "price": 320,
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "bring-your-own-cup",
+      "name": "Bring your own cup",
+      "description": "Money off any hot drink",
+      "price": null,
+      "discount": 25,
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "stamp-card",
+      "name": "Stamp card",
+      "description": "Buy 9 coffees and the 10th is free (a paper card at the till)",
+      "price": null,
+      "studentOnly": true,
+      "active": true
+    }
+  ]
+}

@@ -81,7 +81,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 **Opening hours:**
 - Monday–Friday: 08:00–20:00
 - Saturday and Sunday: 09:00–18:00
-- **Exam season (weekdays only): open until 21:00.** Weekend hours stay the same. This is website content only; no extra booking slots.
+- **Exam season (weekdays only): open until 21:00.** Weekend hours stay the same. Exam season is **5–30 January** and **11 May–12 June**, every year. It changes the opening hours in `GET /api/status` and turns on the Exam Fuel deal. There are no extra booking slots.
 
 | Booking `type` | What | Days | Start times | Length | `partySize` | Capacity per slot | What the capacity counts |
 |---|---|---|---|---|---|---|---|
@@ -198,11 +198,20 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 ### `GET /api/status`
 **Success: `200`**
 ```json
-{ "level": "busy", "label": "Busy", "message": "About 10 seats free", "updatedAt": "2026-11-14T13:05:00Z", "open": true }
+{
+  "level": "busy",
+  "label": "Busy",
+  "message": "About 10 seats free",
+  "updatedAt": "2026-11-14T13:05:00Z",
+  "open": true,
+  "hoursToday": { "opens": "09:00", "closes": "18:00" }
+}
 ```
-- `level` is one of `quiet` · `steady` · `busy` · `packed` · `unknown` · `closed`.
-- It's `unknown` if no one has updated the status in the last **3 hours**, so the site never shows an old "Quiet".
-- It's `closed` outside opening hours, whatever was last set.
+- `level` is one of `quiet` · `steady` · `busy` · `packed` · `unknown` · `closed`. `label` is the same word, ready to display.
+- It's `unknown` if no one has updated the status in the last **3 hours**, so the site never shows an old "Quiet". `message` is then `""`.
+- It's `closed` outside opening hours, whatever was last set. `message` then says when it opens: `"Opens at 08:00"` or `"Opens tomorrow at 09:00"`.
+- `updatedAt` is when the admin last set the status (UTC), or `null` if it has never been set.
+- `hoursToday` is today's opening hours, including the later exam-season closing time.
 
 ### `GET /api/menu`
 **Success: `200`**
@@ -219,7 +228,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
           "id": "latte",
           "name": "Latte",
           "prices": { "regular": 350, "large": 390 },
-          "tags": ["V"],
+          "tags": ["V", "VG-available"],
           "allergens": ["milk"],
           "soldOut": false
         }
@@ -228,6 +237,8 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
     {
       "id": "welsh-cakes",
       "title": "Welsh cakes",
+      "note": "Baked fresh every morning",
+      "offers": [ { "label": "Any 3", "price": 300 }, { "label": "Box of 6", "price": 550 } ],
       "items": [
         {
           "id": "white-chocolate-chip",
@@ -235,7 +246,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
           "description": "Creamy white chocolate chips",
           "prices": { "each": 110 },
           "tags": ["V"],
-          "allergens": ["gluten", "milk", "egg"],
+          "allergens": ["gluten", "milk", "egg", "soya"],
           "soldOut": true
         }
       ]
@@ -247,6 +258,16 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
       "name": "The Cwtch Deal",
       "description": "Any regular latte, cappuccino, flat white or flavoured latte, hot or iced, plus 2 Welsh cakes",
       "price": 480,
+      "normalPrice": { "from": 520, "to": 640 },
+      "studentOnly": true,
+      "active": true
+    },
+    {
+      "id": "bring-your-own-cup",
+      "name": "Bring your own cup",
+      "description": "Money off any hot drink",
+      "price": null,
+      "discount": 25,
       "studentOnly": true,
       "active": true
     }
@@ -254,9 +275,21 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 }
 ```
 - **Prices are whole pence** (`350` = £3.50). That avoids rounding errors with decimals.
-- Allowed `tags`: `V` · `VG` · `GF-available`.
-- Allowed `allergens` (from the UK's 14 allergens): `gluten` · `milk` · `egg` · `nuts` · `peanuts` · `soya` · `sesame` · `sulphites` · and the others as needed.
-- Section ids: `hot-coffee` · `iced` · `tea-and-others` · `welsh-cakes` · `bakes`.
+- **Sections** are in display order and have `id`, `title` and `items`. They can also have:
+  - `sizes`, with `regular` and/or `large` mapped to a cup size, always smallest first. An item in a sized section prices each size it comes in (Espresso only has `regular`). Items in sections without sizes have a single price, `{ "each": 90 }`.
+  - `note`, a short line to show under the title.
+  - `offers`, bundle prices for the section, such as Welsh cakes "Any 3" for £3.00.
+- Section ids: `hot-coffee` · `iced` · `tea-and-others` · `welsh-cakes` · `bakes` · `extras`. `extras` holds plant milk (free), an extra shot, syrups, and cream and marshmallows.
+- **Items** have `id` (unique across the whole menu, and used by `PATCH /api/admin/menu/{itemId}`), `name`, an optional `description`, `prices`, `tags`, `allergens` and `soldOut`.
+- Allowed `tags`: `V` · `VG` · `VG-available` (vegan with oat, soy or almond milk) · `GF-available`.
+- Allowed `allergens` are the UK's 14: `celery` · `gluten` · `crustaceans` · `egg` · `fish` · `lupin` · `milk` · `molluscs` · `mustard` · `nuts` · `peanuts` · `sesame` · `soya` · `sulphites`.
+- **Deals** have `id`, `name`, `description`, `price` (`null` when there's no fixed price, as with the stamp card), `studentOnly` and `active`. They can also have:
+  - `discount`, money off in pence.
+  - `normalPrice` (`{ from, to }`), what the deal would usually cost.
+  - `when`, a short condition such as `"Before 10am"` or `"Exam season only"`.
+- **Exam Fuel** is only `active` during exam season (section 3). The API works this out from the date.
+- If the menu hasn't been loaded yet, `sections` and `deals` are empty lists.
+- The menu data lives in `scripts/menu.json`, and `scripts/seed_menu.py` loads it into DynamoDB after checking every field above.
 
 ---
 
@@ -368,6 +401,6 @@ Only `approved` reviews, newest first. The summary is worked out from approved r
 | `cwtch-and-cake-bookings` | `pk` = reference (`CC-7F3K9Q`) | type, classKind, date, time, partySize, units, name, email, society, notes, createdAt, reviewed, **ttl** | GSI `by-date` (pk = `date`, sk = `time`) for the admin list. TTL = booking date + 30 days |
 | `cwtch-and-cake-slots` | `pk` = `room#2026-11-14#10:00` | booked, capacity, **ttl** | TTL = slot date + 1 day |
 | `cwtch-and-cake-reviews` | `pk` = reviewId | rating, tags, comment, displayName, courseYear, verified, flagged, toxicityScore, status, createdAt | GSI `by-status` (pk = `status`, sk = `createdAt`) |
-| `cwtch-and-cake-cafe` | `pk` + `sk`: (`status`, `current`) · (`menu`, `<sectionOrder>#<section>#<itemOrder>#<item>`) · (`deal`, `<id>`) | Depends on the item type | All menu items share `pk = "menu"`, so the whole menu, in display order, is **one `Query`**. Deals are a second `Query` |
+| `cwtch-and-cake-cafe` | `pk` + `sk`: (`status`, `current`) · (`menu`, `<sectionOrder>#<section>`) for a section · (`menu`, `<sectionOrder>#<section>#<itemOrder>#<item>`) for an item · (`deal`, `<order>#<id>`) | status: level, message, updatedAt · section: title, sizes, note, offers · item: itemId, sectionId, name, description, prices, tags, allergens, soldOut · deal: dealId, name, description, price, discount, normalPrice, when, season, studentOnly, active | Orders are 2 digits (`01`, `02`...). A section's `sk` is the start of its items' `sk`s, so **one `Query`** on `pk = "menu"` returns every section followed by its items, in display order. Deals are a second `Query`. Each Lambda's IAM policy is limited to its own partitions (SECURITY.md section 4) |
 
 Reviews have **no TTL** and stay until the admin deletes them. Bookings and slots tidy themselves up.

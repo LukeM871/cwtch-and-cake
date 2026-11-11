@@ -21,6 +21,13 @@ ROOM_TIMES_WEEKEND = ("10:00", "12:00", "14:00", "16:00")
 CAPACITY = {"class": 8, "room": 2, "group": 1}
 PARTY_SIZE = {"class": (1, 4), "room": (2, 6), "group": (5, 20)}
 
+# Opening hours. In exam season, weekdays stay open until 21:00 (weekends unchanged).
+WEEKDAY_HOURS = ("08:00", "20:00")
+WEEKEND_HOURS = ("09:00", "18:00")
+EXAM_SEASON_CLOSE = "21:00"
+# Cardiff's January and May-June exam periods, every year: (month, day) first and last day.
+EXAM_SEASONS = (((1, 5), (1, 30)), ((5, 11), (6, 12)))
+
 
 def now_uk() -> datetime:
     """Current UK time. Tests replace this to freeze the clock."""
@@ -35,6 +42,19 @@ def slot_times(booking_type: str, day: date) -> tuple[str, ...]:
     if booking_type in ("room", "group"):
         return ROOM_TIMES_WEEKEND if weekend else ROOM_TIMES_WEEKDAY
     return ()
+
+
+def is_exam_season(day: date) -> bool:
+    month_day = (day.month, day.day)
+    return any(first <= month_day <= last for first, last in EXAM_SEASONS)
+
+
+def opening_hours(day: date) -> tuple[str, str]:
+    """(opens, closes) for a day, as HH:MM."""
+    if day.weekday() >= 5:
+        return WEEKEND_HOURS
+    opens, closes = WEEKDAY_HOURS
+    return opens, EXAM_SEASON_CLOSE if is_exam_season(day) else closes
 
 
 def slot_start(day: date, hhmm: str) -> datetime:
