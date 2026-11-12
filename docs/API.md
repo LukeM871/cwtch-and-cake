@@ -16,7 +16,7 @@ This is the exact agreement between the **website** and the **backend**. The Lam
 | Time zone | All dates and times are **UK local time (Europe/London)**. "Today" and "in the past" use UK time |
 | Date format | `YYYY-MM-DD`, for example `2026-11-14` |
 | Time format | `HH:MM`, 24-hour, for example `14:00` |
-| Text | Trimmed. Control characters removed. Lengths counted in characters |
+| Text | Trimmed. Control and invisible characters (zero-width spaces, right-to-left tricks) removed, and runs of spaces become one. Line breaks are kept only in review comments and booking notes. Lengths counted in characters, after cleaning |
 | Emails | Trimmed and lower-cased before they're compared or stored |
 | Unknown fields | Ignored and never stored |
 | Honeypot | Every public form has a hidden `website` field. If it isn't empty → a fake success, and nothing is saved |
@@ -45,11 +45,13 @@ This is the exact agreement between the **website** and the **backend**. The Lam
 | `403` | `forbidden` | The request didn't come through CloudFront |
 | `404` | `not_found` | Booking not found **or** the email doesn't match (deliberately the same) |
 | `405` | `method_not_allowed` | Wrong HTTP method |
-| `409` | `slot_full` / `already_reviewed` | No space left in the slot / the booking was already used for a review |
+| `409` | `slot_full` / `already_reviewed` / `conflict` | No space left in the slot / the booking was already used for a review / two admins changed the same review at once |
 | `413` | `too_large` | Body over 4 KB |
 | `415` | `unsupported_media_type` | Not JSON |
 | `429` | `rate_limited` | Too many requests |
 | `500` | `server` | Something broke. The website shows "Sorry, something went wrong, please try again" |
+
+**Two answers come from API Gateway itself**, before any Lambda runs, so they have its own body instead of the format above: `401` (no valid admin login) is `{"message": "Unauthorized"}` and `429` is `{"message": "Too Many Requests"}`. The website goes by the status code for these two. (A `401` from the admin Lambda, for a valid login that isn't an admin's, does use the normal format.)
 
 ---
 
@@ -313,36 +315,39 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
 | Field | Required | Rules |
 |---|---|---|
 | `rating` | ✅ | Whole number 1–5 |
-| `tags` | ❌ | Up to 3, no repeats, from: `best-welsh-cakes` · `great-coffee` · `quiet` · `fast-wifi` · `plenty-of-plugs` · `friendly-staff` · `good-value` · `cosy` |
-| `comment` | ✅ | 20–500 characters |
+| `tags` | ❌ | Up to 3, no repeats, from: `best-welsh-cakes` · `great-coffee` · `quiet` · `fast-wifi` · `plenty-of-plugs` · `friendly-staff` · `good-value` · `cosy`. Stored in this fixed order |
+| `comment` | ✅ | 20–500 characters. Line breaks are kept (at most one empty line in a row); everything else is cleaned like other text |
 | `displayName` | ✅ | 1–30 characters. Shown as given. The website suggests "first name + initial" |
 | `courseYear` | ❌ | `1st year` · `2nd year` · `3rd year` · `4th year` · `Postgrad` · `Staff` · `Visitor` |
 | `reference` + `email` | ❌, but both or neither | For the **"Verified visit"** badge |
 | `website` | — | Honeypot |
 
-**What happens, in order:**
-1. Honeypot and field checks. If they fail → `400`.
-2. **Word filter:** obvious slurs or abuse → `400`, with `fields.comment = "Please keep reviews friendly"`.
-3. **Amazon Comprehend toxicity check** on the comment:
-   - very toxic (score ≥ 0.8) → `400`, same message
-   - borderline (0.5–0.8) → saved with `flagged: true` for the admin to look at
-   - if Comprehend is unavailable → saved as normal (the admin still moderates everything)
-4. **If a reference and email were given:** the booking must exist, the email must match and the booking's date must have passed.
-   - If the reference or email is wrong → `404`.
-   - If the date hasn't passed → `400`.
-   - In **one transaction**, the booking is marked `reviewed` (on condition that it wasn't already) and the review is saved with `verified: true`.
-   - If the booking was already used → `409 already_reviewed`.
-5. Saved with `status: "pending"`. **The email is never stored on the review.**
+**What happens, in order** (cheapest checks first, so a bad request never reaches the paid AI check):
+1. Honeypot and field checks. If they fail → `400`, with every problem at once.
+2. **Word filter** on the comment and the display name: obvious slurs or abuse → `400`, with `fields.comment = "Please keep reviews friendly"` (or `fields.displayName = "Please choose a different name"`). It matches **whole words only** (so Scunthorpe, "classic" and Offa's Dyke are fine) and sees through disguises: capitals, accents, look-alike letters, leetspeak, stretched letters and spaced-out letters. The blocked words are stored as SHA-256 hashes, so the repo contains no slurs.
+3. **If a reference and email were given:** the booking must exist, the email must match, it must have **started** (its date and start time have passed) and it must not have been used for a review already.
+   - Wrong reference, wrong email, or a booking already deleted for privacy (30 days after the visit) → `404`, the same answer for all three.
+   - Not started yet → `400` with `fields.reference`.
+   - Already used → `409 already_reviewed`.
+4. **Amazon Comprehend toxicity check** on the comment **and** the display name, in one call:
+   - very toxic (score ≥ 0.8) → `400`, the same messages as step 2
+   - borderline (0.5 to just under 0.8) → saved with `flagged: true` for the admin to look at
+   - if the check is switched off or Comprehend is unavailable → saved as normal, with no score (the admin still approves everything)
+   - Comprehend takes text segments of up to 1 KB, so a long comment (500 emoji is 2 KB) is cut into several segments. Otherwise an over-long comment would make the call fail and skip the check.
+   - **Status: built and tested, but switched off** (Terraform `toxicity_check_region = ""`) while the AWS account is on the Free plan, which doesn't allow Comprehend. Toxicity detection isn't offered in London, so when it's on, this one call goes to Ireland (`eu-west-1`).
+5. Saved with `status: "pending"`. **The email is never stored on the review.** With a booking, **one transaction** saves the review and marks the booking `reviewed`, on condition it wasn't already. Two reviews for one booking sent at the same moment can't both succeed: the second gets `409`. A review rejected in step 2 or 4 doesn't use the booking up, so they can try again, nicely.
 
 **Success: `202`**
 ```json
-{ "reviewId": "rv_01JC3X8Z9Q", "status": "pending", "verified": true,
+{ "reviewId": "rv_01M75SEND0H7XNGJTQXZGMFDZP", "status": "pending", "verified": true,
   "message": "Diolch! Thanks for your review. It'll appear once it's been checked." }
 ```
+- `reviewId` is `rv_` + a 26-character ULID (10 characters of time + 16 random, in the booking-reference alphabet).
+- If the honeypot is filled in: a normal-looking `202` with a made-up id. Nothing is saved or checked.
 
 ### `GET /api/reviews?limit=20&cursor=...`
 - `limit`: 1–50, default 20.
-- `cursor`: from the previous response, to load more.
+- `cursor`: the `nextCursor` from the previous page, to load more. It only says where the last page ended; it can't be edited to show pending or rejected reviews (anything odd → `400` with `fields.cursor`).
 
 **Success: `200`**
 ```json
@@ -350,7 +355,7 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
   "summary": { "averageRating": 4.7, "count": 128, "topTags": ["best-welsh-cakes", "cosy", "fast-wifi"] },
   "reviews": [
     {
-      "reviewId": "rv_01JC3X8Z9Q",
+      "reviewId": "rv_01M75SEND0H7XNGJTQXZGMFDZP",
       "rating": 5,
       "tags": ["best-welsh-cakes", "fast-wifi"],
       "comment": "Salted caramel Welsh cakes got me through my dissertation.",
@@ -363,21 +368,42 @@ Admin routes need `Authorization: Bearer <Cognito token>`. API Gateway checks th
   "nextCursor": null
 }
 ```
-Only `approved` reviews, newest first. The summary is worked out from approved reviews only.
+- Only `approved` reviews, newest first. `courseYear` is `null` when not given.
+- `nextCursor` is `null` on the last page, including a page that ends exactly on the last review (no link to an empty page).
+- **Summary:** from approved reviews only. `averageRating` is rounded half-up to 1 decimal place (4.25 → 4.3), or `null` with no reviews. `topTags` are the 3 most used tags; a tie keeps the fixed tag order above.
+- The summary is one stored row, kept up to date inside the same transaction that approves, rejects or deletes a review (section 9). So it costs the same with 10 reviews or 10,000, and can never disagree with the reviews shown.
+- Cached for 5 minutes: an approved review appears within 5 minutes.
 
 ---
 
 ## 7. Admin (Cognito login required)
 
+Every admin request needs `Authorization: Bearer <access token>` from the Cognito hosted login. There are three checks:
+1. CloudFront's secret origin header, like every route.
+2. **API Gateway's JWT authorizer:** the token's signature, expiry, issuer (our user pool) and audience (our admin app client). If any of these fail → `401` before the Lambda starts.
+3. **The admin Lambda checks the token again:** it must be an **access** token (not an ID token), from our app client, for a user in the **`admins`** group. If not → `401 unauthorized`. Self sign-up is off, so this is a second layer: even an account created by mistake couldn't use these routes.
+
+Login problems are always `401`, never `403`, because CloudFront turns a `403` into the site's 404 page.
+
 | Route | Request | Response |
 |---|---|---|
-| `GET /api/admin/bookings?date=YYYY-MM-DD` | — | `{ "date": "...", "bookings": [ { reference, type, classKind, time, partySize, name, email, society, notes } ] }`, sorted by time |
-| `PUT /api/admin/status` | `{ "level": "busy", "message": "About 10 seats free" }` (message ≤ 60 characters, optional) | The new status (same shape as `GET /api/status`) |
-| `PATCH /api/admin/menu/{itemId}` | Any of `{ "soldOut": true, "prices": { "regular": 360 } }` | The updated item |
-| `GET /api/admin/reviews?status=pending` | `status`: `pending` · `approved` · `rejected` | `{ "reviews": [ ...same as public, plus "status", "flagged", "toxicityScore" ] }` |
-| `POST /api/admin/reviews/{reviewId}` | `{ "action": "approve" }` or `{ "action": "reject" }` | `{ "reviewId": "...", "status": "approved" }` |
+| `GET /api/admin/bookings?date=YYYY-MM-DD` | Any real date, past or future | `{ "date": "...", "bookings": [ { reference, type, classKind, time, partySize, name, email, society, notes } ] }`, sorted by time (then by when they were booked). Missing optional fields are `null` |
+| `PUT /api/admin/status` | `{ "level": "busy", "message": "About 10 seats free" }`. `level` is `quiet` · `steady` · `busy` · `packed`. `message` is optional, ≤ 60 characters | The new status, in exactly the shape of `GET /api/status` (so outside opening hours it says `closed`) |
+| `PATCH /api/admin/menu/{itemId}` | Any of `{ "soldOut": true, "prices": { "regular": 360 } }`. Only the sizes sent change, and only sizes the item already has | The updated item, in exactly the shape of `GET /api/menu`. Unknown item → `404` |
+| `GET /api/admin/reviews?status=pending&limit=50&cursor=...` | `status`: `pending` (default) · `approved` · `rejected`. `limit` 1–100, default 50 | `{ "status": "...", "reviews": [ ...same as public, plus "status", "flagged", "toxicityScore", "toxicityLabels", "moderatedAt" ], "nextCursor": ... }`. Pending is **oldest first** (a queue); the others newest first. `toxicityScore` is `null` if the AI check didn't run |
+| `POST /api/admin/reviews/{reviewId}` | `{ "action": "approve" }`, `{ "action": "reject" }` or `{ "action": "delete" }` | `{ "reviewId": "...", "status": "approved" }` (or `rejected` / `deleted`) |
 
-`soldOut` flags are reset to `false` automatically at **06:00 UK time** every morning, when the Welsh cakes are baked fresh. This runs on an EventBridge schedule, using the admin Lambda with a special event.
+**Moderating reviews:**
+- Approve, reject or delete work from any status: a public review can be hidden again, and a rejected one approved later. `delete` removes it for good, for example when the writer asks.
+- Repeating an action (approving an approved review) changes nothing.
+- The review's change and the summary's change are **one transaction**, with a condition that the review's status is still what was just read. If two admin tabs act at the same moment, one fails its condition, reads again and tries again, so the summary never counts a review twice. After 3 tries → `409 conflict`.
+- A rejected or deleted **verified** review doesn't free its booking for another review.
+
+**06:00 daily reset:** `soldOut` flags are reset to `false` every morning at **06:00 UK time**, when the Welsh cakes are baked fresh. This runs on **EventBridge Scheduler**, in the `Europe/London` time zone, so it stays at 06:00 through the clock changes. It calls the admin Lambda directly with `{"task": "daily-reset"}`. API Gateway events always have a `requestContext`, so a web request can never pose as this task. The same run also **recounts** the approved reviews and repairs the summary row if it has drifted (for example after a review was deleted by hand in the AWS console). The recount:
+- skips if a review was moderated in the last 2 minutes, because the index it counts from can lag a moment behind;
+- only writes if the summary's `version` hasn't changed while it was counting.
+
+Price changes made from the admin page stay. Only `scripts/seed_menu.py` resets prices.
 
 ---
 
@@ -398,9 +424,9 @@ Only `approved` reviews, newest first. The summary is worked out from approved r
 
 | Table | Key | Main attributes | Extras |
 |---|---|---|---|
-| `cwtch-and-cake-bookings` | `pk` = reference (`CC-7F3K9Q`) | type, classKind, date, time, partySize, units, name, email, society, notes, createdAt, reviewed, **ttl** | GSI `by-date` (pk = `date`, sk = `time`) for the admin list. TTL = booking date + 30 days |
+| `cwtch-and-cake-bookings` | `pk` = reference (`CC-7F3K9Q`) | type, classKind, date, time, partySize, units, name, email, society, notes, createdAt, reviewed (`true` once used for a review), **ttl** | GSI `by-date` (pk = `date`, sk = `time`) for the admin list. TTL = booking date + 30 days |
 | `cwtch-and-cake-slots` | `pk` = `room#2026-11-14#10:00` | booked, capacity, **ttl** | TTL = slot date + 1 day |
-| `cwtch-and-cake-reviews` | `pk` = reviewId | rating, tags, comment, displayName, courseYear, verified, flagged, toxicityScore, status, createdAt | GSI `by-status` (pk = `status`, sk = `createdAt`) |
+| `cwtch-and-cake-reviews` | `pk` = reviewId (`rv_...`), plus one row with `pk` = `summary` | review: rating, tags, comment, displayName, courseYear, verified, flagged, toxicityScore, toxicityLabels, status, createdAt, moderatedAt · summary: reviewCount, ratingTotal, `tag_<tag>` (one counter per tag), version, updatedAt | GSI `by-status` (pk = `status`, sk = `createdAt`). The summary row has no `status`, so it's never in the index. It only changes in the same transaction as a moderation, using DynamoDB's `ADD` (which creates a counter the first time). `version` goes up on every change |
 | `cwtch-and-cake-cafe` | `pk` + `sk`: (`status`, `current`) · (`menu`, `<sectionOrder>#<section>`) for a section · (`menu`, `<sectionOrder>#<section>#<itemOrder>#<item>`) for an item · (`deal`, `<order>#<id>`) | status: level, message, updatedAt · section: title, sizes, note, offers · item: itemId, sectionId, name, description, prices, tags, allergens, soldOut · deal: dealId, name, description, price, discount, normalPrice, when, season, studentOnly, active | Orders are 2 digits (`01`, `02`...). A section's `sk` is the start of its items' `sk`s, so **one `Query`** on `pk = "menu"` returns every section followed by its items, in display order. Deals are a second `Query`. Each Lambda's IAM policy is limited to its own partitions (SECURITY.md section 4) |
 
 Reviews have **no TTL** and stay until the admin deletes them. Bookings and slots tidy themselves up.

@@ -1,7 +1,6 @@
 """POST /api/booking/cancel: cancel a booking and free its place (docs/API.md section 4)."""
 from __future__ import annotations
 
-import hmac
 import json
 import logging
 from datetime import date
@@ -9,7 +8,7 @@ from datetime import date
 from botocore.exceptions import ClientError
 
 from cwtch import aws, emails, rules, validate
-from cwtch.http import ApiError, api_handler, parse_json, respond
+from cwtch.http import ApiError, api_handler, parse_json, respond, same_secret
 
 log = logging.getLogger()
 
@@ -36,7 +35,7 @@ def handler(event: dict) -> dict:
         TableName=aws.bookings_table(), Key={"pk": {"S": reference}}, ConsistentRead=True
     ).get("Item")
     # Same answer for "no such booking" and "wrong email", so references can't be probed.
-    if not found or not hmac.compare_digest(found["email"]["S"], email):
+    if not found or not same_secret(found["email"]["S"], email):
         raise NOT_FOUND
 
     b = _plain(found)

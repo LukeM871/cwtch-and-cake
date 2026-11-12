@@ -101,3 +101,16 @@ def test_todays_slots_that_are_too_soon_are_hidden(fake_aws):
 def test_availability_validates_query(fake_aws):
     status, body, _ = availability(type="spa", date="tomorrow")
     assert status == 400 and set(body["fields"]) == {"type", "date"}
+
+
+def test_email_with_accents_works_and_a_wrong_one_is_still_404(fake_aws):
+    """compare_digest refuses non-ASCII text; a valid email like ffiôn@... must not cause a 500."""
+    ref = book(email="ffiôn@example.com")
+    assert cancel(ref, email="ffión@example.com")[0] == 404
+    assert cancel(ref, email="ffiôn@example.com")[0] == 200
+
+
+def test_odd_origin_header_is_403_not_500():
+    assert availability(type="room", date=MONDAY)[0] == 200
+    ev = event(method="GET", path="/api/availability", query={"type": "room", "date": MONDAY}, secret="sécret")
+    assert call(get_availability.handler, ev)[0] == 403

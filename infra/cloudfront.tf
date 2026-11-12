@@ -4,16 +4,15 @@
 # -----------------------------------------------------------------------------
 
 locals {
-  csp_connect_src = trimspace("'self' ${var.cognito_domain == "" ? "" : "https://${var.cognito_domain}"}")
-
-  # docs/SECURITY.md section 2. Keep the two in sync.
+  # docs/SECURITY.md section 2. Keep the two in sync. The admin page's only
+  # call to another site is swapping its login code for tokens at Cognito.
   content_security_policy = join("; ", [
     "default-src 'self'",
     "script-src 'self'",
     "style-src 'self'",
     "img-src 'self' data:",
     "font-src 'self'",
-    "connect-src ${local.csp_connect_src}",
+    "connect-src 'self' https://${local.cognito_host}",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -45,6 +44,36 @@ resource "aws_cloudfront_cache_policy" "api" {
     }
     headers_config {
       header_behavior = "none"
+    }
+    cookies_config {
+      cookie_behavior = "none"
+    }
+  }
+}
+
+# Admin API: the login token (Authorization header) must reach API Gateway.
+# CloudFront strips that header from GET requests unless it's part of the cache
+# key, so it's in the key here. Nothing is ever actually cached: the admin
+# Lambda answers "Cache-Control: no-store", and with the token in the key two
+# people could never share an answer anyway.
+resource "aws_cloudfront_cache_policy" "api_admin" {
+  name        = "${var.project}-api-admin"
+  comment     = "Admin API: forwards the Cognito token; never cached (origin sends no-store)"
+  min_ttl     = 0
+  default_ttl = 0
+  max_ttl     = 1 # must be above 0 to allow a cache key; no-store wins anyway
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    enable_accept_encoding_gzip   = true
+    enable_accept_encoding_brotli = true
+    query_strings_config {
+      query_string_behavior = "all"
+    }
+    headers_config {
+      header_behavior = "whitelist"
+      headers {
+        items = ["Authorization"]
+      }
     }
     cookies_config {
       cookie_behavior = "none"
@@ -143,6 +172,19 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
+  # Listed first: CloudFront uses the first pattern that matches.
+  ordered_cache_behavior {
+    path_pattern               = "/api/admin/*"
+    target_origin_id           = "api"
+    viewer_protocol_policy     = "https-only"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods             = ["GET", "HEAD"]
+    compress                   = true
+    cache_policy_id            = aws_cloudfront_cache_policy.api_admin.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.all_except_host.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
+  }
+
   ordered_cache_behavior {
     path_pattern               = "/api/*"
     target_origin_id           = "api"
@@ -168,7 +210,10 @@ resource "aws_cloudfront_distribution" "site" {
   # A private S3 bucket answers 403 (not 404) for a missing file; show the
   # friendly 404 page instead. Error pages apply to EVERY origin, so 404 is
   # deliberately NOT mapped: the API's JSON 404 ("booking not found") must reach
-  # the browser untouched. The API never returns 403 through CloudFront.
+  # the browser untouched. The API never returns 403 through CloudFront: the
+  # origin check only fails for direct calls, and the admin routes use 401 for
+  # every login problem (no authorization scopes on the routes, whose failure
+  # would be a 403 from API Gateway; the admin Lambda checks the token instead).
   custom_error_response {
     error_code            = 403
     response_code         = 404

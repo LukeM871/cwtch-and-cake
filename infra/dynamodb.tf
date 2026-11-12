@@ -91,3 +91,50 @@ resource "aws_dynamodb_table" "cafe" {
     enabled = false # the menu can be rebuilt any time with scripts/seed_menu.py
   }
 }
+
+# Reviews (docs/API.md section 9): one row per review (pk "rv_..."), plus one
+# summary row (pk "summary") with running totals for the approved reviews.
+# No TTL: reviews stay until the admin deletes them.
+resource "aws_dynamodb_table" "reviews" {
+  name         = "${var.project}-reviews"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "pk"
+
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+  attribute {
+    name = "status"
+    type = "S"
+  }
+  attribute {
+    name = "createdAt"
+    type = "S"
+  }
+
+  # The public list (status = approved, newest first) and the admin's moderation
+  # queue (status = pending, oldest first). The summary row has no status, so
+  # it's never in this index.
+  global_secondary_index {
+    name            = "by-status"
+    projection_type = "ALL"
+
+    key_schema {
+      attribute_name = "status"
+      key_type       = "HASH"
+    }
+    key_schema {
+      attribute_name = "createdAt"
+      key_type       = "RANGE"
+    }
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false # keeps it free; a portfolio café's reviews aren't worth the backup cost
+  }
+}

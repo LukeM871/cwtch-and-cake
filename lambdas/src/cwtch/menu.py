@@ -248,7 +248,7 @@ def _load(row: dict) -> dict:
     return _plain({k: _deserialize(v) for k, v in row.items()})
 
 
-def _in_size_order(mapping: dict) -> dict:
+def in_size_order(mapping: dict) -> dict:
     rank = {name: i for i, name in enumerate(SIZE_NAMES)}
     return dict(sorted(mapping.items(), key=lambda kv: rank.get(kv[0], len(rank))))
 
@@ -257,11 +257,16 @@ def _item(row: dict) -> dict:
     item = {"id": row["itemId"], "name": row["name"]}
     if row.get("description"):
         item["description"] = row["description"]
-    item["prices"] = _in_size_order(row.get("prices", {}))
+    item["prices"] = in_size_order(row.get("prices", {}))
     item["tags"] = row.get("tags", [])
     item["allergens"] = row.get("allergens", [])
     item["soldOut"] = bool(row.get("soldOut", False))
     return item
+
+
+def item_from_row(row: dict) -> dict:
+    """One item row (DynamoDB's format) → the item exactly as GET /api/menu shows it."""
+    return _item(_load(row))
 
 
 def _deal(row: dict, today: date) -> dict:
@@ -283,7 +288,7 @@ def to_response(menu_rows: list[dict], deal_rows: list[dict], today: date) -> di
         if row.get("kind") == "section":
             section = {"id": row["sectionId"], "title": row["title"]}
             if row.get("sizes"):
-                section["sizes"] = _in_size_order(row["sizes"])
+                section["sizes"] = in_size_order(row["sizes"])
             for optional in ("note", "offers"):
                 if row.get(optional):
                     section[optional] = row[optional]

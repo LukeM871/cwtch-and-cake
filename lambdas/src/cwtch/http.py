@@ -36,6 +36,10 @@ def error_body(err: ApiError) -> dict:
     return body
 
 
+def validation_error(fields: dict) -> ApiError:
+    return ApiError(400, "validation", "Please check the highlighted fields.", fields)
+
+
 def _headers(event: dict) -> dict:
     return {k.lower(): v for k, v in (event.get("headers") or {}).items()}
 
@@ -44,11 +48,17 @@ def method(event: dict) -> str:
     return event.get("requestContext", {}).get("http", {}).get("method", "").upper()
 
 
+def same_secret(a: str, b: str) -> bool:
+    """Constant-time comparison (no timing hints for guessers). Compares UTF-8 bytes:
+    compare_digest refuses non-ASCII str, and an email like ffiôn@... is valid."""
+    return hmac.compare_digest(a.encode("utf-8"), b.encode("utf-8"))
+
+
 def check_origin(event: dict) -> None:
     """Only requests that came through CloudFront carry the secret header."""
     expected = os.environ.get("ORIGIN_SECRET", "")
     got = _headers(event).get("x-origin-verify", "")
-    if not expected or not hmac.compare_digest(expected, got):
+    if not expected or not isinstance(got, str) or not same_secret(expected, got):
         raise ApiError(403, "forbidden", "Forbidden.")
 
 
@@ -73,26 +83,38 @@ def query(event: dict) -> dict:
     return event.get("queryStringParameters") or {}
 
 
+def path_param(event: dict, name: str) -> str:
+    return (event.get("pathParameters") or {}).get(name, "")
+
+
+def run(event: dict, fn: Callable[[dict], dict]) -> dict:
+    """Runs a request: ApiError → its JSON error, a crash → 500. Logs never hold personal data."""
+    route = event.get("routeKey", "?")
+    try:
+        result = fn(event)
+        log.info(json.dumps({"route": route, "status": result["statusCode"]}))
+        return result
+    except ApiError as err:
+        log.info(json.dumps({"route": route, "status": err.status, "error": err.code}))
+        return respond(err.status, error_body(err))
+    except Exception as exc:  # noqa: BLE001 - last-resort safety net
+        log.error(json.dumps({"route": route, "status": 500, "exception": type(exc).__name__}))
+        return respond(500, {"error": "server", "message": "Sorry, something went wrong. Please try again."})
+
+
 def api_handler(allowed_method: str) -> Callable:
-    """Wraps a handler: method + origin checks, ApiError → JSON, crashes → 500 (no personal data logged)."""
+    """Wraps a one-route handler: origin + method checks, then run()."""
 
     def decorator(fn: Callable[[dict], dict]) -> Callable[[dict, Any], dict]:
+        def guarded(event: dict) -> dict:
+            check_origin(event)
+            if method(event) != allowed_method:
+                raise ApiError(405, "method_not_allowed", "Method not allowed.")
+            return fn(event)
+
         @functools.wraps(fn)
         def wrapper(event: dict, context: Any = None) -> dict:
-            route = event.get("routeKey", "?")
-            try:
-                check_origin(event)
-                if method(event) != allowed_method:
-                    raise ApiError(405, "method_not_allowed", "Method not allowed.")
-                result = fn(event)
-                log.info(json.dumps({"route": route, "status": result["statusCode"]}))
-                return result
-            except ApiError as err:
-                log.info(json.dumps({"route": route, "status": err.status, "error": err.code}))
-                return respond(err.status, error_body(err))
-            except Exception as exc:  # noqa: BLE001 - last-resort safety net
-                log.error(json.dumps({"route": route, "status": 500, "exception": type(exc).__name__}))
-                return respond(500, {"error": "server", "message": "Sorry, something went wrong. Please try again."})
+            return run(event, guarded)
 
         return wrapper
 

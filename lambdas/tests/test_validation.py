@@ -66,3 +66,10 @@ def test_references_use_unambiguous_alphabet():
         ref = refs.new_reference()
         assert validate.REFERENCE_RE.match(ref)
         assert not set(ref[3:]) & set("ILOU")
+
+
+def test_class_with_bad_date_and_a_list_for_time_is_a_400_not_a_crash():
+    """Found in Phase 5: with no valid date, the class-time lookup used to receive the raw value,
+    and a list can't be a dict key (TypeError → 500)."""
+    errors = errors_for(type="class", date="not-a-date", time=[], partySize=2)
+    assert "date" in errors

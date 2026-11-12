@@ -71,7 +71,7 @@ jobs:
           cd lambdas/src
           zip -qr ../../lambda.zip . -x '*__pycache__*'
           cd ../..
-          for fn in create-booking cancel-booking get-availability get-status get-menu; do
+          for fn in create-booking cancel-booking get-availability get-status get-menu create-review list-reviews admin; do
             aws lambda update-function-code --function-name "cwtch-and-cake-$fn" \
               --zip-file fileb://lambda.zip --query 'LastUpdateStatus' --output text
             aws lambda wait function-updated --function-name "cwtch-and-cake-$fn"
