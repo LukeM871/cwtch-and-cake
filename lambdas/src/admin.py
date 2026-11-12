@@ -22,7 +22,7 @@ from typing import Any, Callable
 
 from botocore.exceptions import ClientError
 
-from cwtch import aws, http, menu, reviews, rules, status, validate
+from cwtch import aws, http, menu, metrics, reviews, rules, status, validate
 from cwtch.http import ApiError, check_origin, parse_json, path_param, query, respond, validation_error
 
 log = logging.getLogger()
@@ -31,6 +31,7 @@ UNAUTHORIZED = ApiError(401, "unauthorized", "Please log in again.")
 ITEM_NOT_FOUND = ApiError(404, "not_found", "There's no menu item with that id.")
 REVIEW_NOT_FOUND = ApiError(404, "not_found", "There's no review with that id.")
 ACTIONS = {"approve": "approved", "reject": "rejected", "delete": None}
+MODERATION_METRICS = {"approved": metrics.REVIEW_APPROVED, "rejected": metrics.REVIEW_REJECTED}
 MODERATION_ATTEMPTS = 3
 SUMMARY_SETTLE = timedelta(minutes=2)  # the nightly recount waits this long after any moderation
 
@@ -303,6 +304,8 @@ def moderate_review(event: dict, sub: str) -> dict:
                 continue  # changed by someone else in between: look again
             raise
         _audit(action, sub, reviewId=review_id, was=current)
+        if target in MODERATION_METRICS:
+            metrics.count(MODERATION_METRICS[target])
         return respond(200, {"reviewId": review_id, "status": target or "deleted"})
     raise ApiError(409, "conflict", "This review was changed at the same moment. Refresh and try again.")
 

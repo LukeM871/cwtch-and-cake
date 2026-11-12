@@ -3,7 +3,10 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_s3_bucket" "site" {
-  bucket = "${var.project}-site-${data.aws_caller_identity.current.account_id}"
+  bucket = "${local.project}-site-${data.aws_caller_identity.current.account_id}"
+
+  # Only a throwaway copy (not the live site) can be destroyed with files still in it.
+  force_destroy = !local.is_main
 }
 
 resource "aws_s3_bucket_versioning" "site" {

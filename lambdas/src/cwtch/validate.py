@@ -17,6 +17,7 @@ _LINE_BREAKS = re.compile(r"\r\n?|[\n\v\f\x85  ]")
 _MANY_BLANK_LINES = re.compile(r"\n{3,}")
 
 FRIENDLY = "Please keep reviews friendly"
+NAME_BLOCKED = "Please choose a different name"
 
 
 def _visible(value: str) -> str:
@@ -195,7 +196,7 @@ def review(body: dict) -> tuple[dict, dict]:
 
     display_name = text(body, "displayName", errors, min_len=1, max_len=reviews.NAME_MAX, label="a display name")
     if "displayName" not in errors and wordfilter.is_blocked(display_name):
-        errors["displayName"] = "Please choose a different name"
+        errors["displayName"] = NAME_BLOCKED
 
     course_year = body.get("courseYear")
     if course_year in (None, ""):

@@ -16,17 +16,21 @@ variable "github_oidc_sub_prefix" {
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
+  count = local.is_main ? 1 : 0 # one per AWS account: only the live stack has it
+
   url            = "https://token.actions.githubusercontent.com"
   client_id_list = ["sts.amazonaws.com"]
 }
 
 data "aws_iam_policy_document" "deploy_trust" {
+  count = local.is_main ? 1 : 0
+
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.github.arn]
+      identifiers = [aws_iam_openid_connect_provider.github[0].arn]
     }
 
     condition {
@@ -46,15 +50,19 @@ data "aws_iam_policy_document" "deploy_trust" {
 }
 
 resource "aws_iam_role" "deploy" {
-  name                 = "${var.project}-deploy"
+  count = local.is_main ? 1 : 0
+
+  name                 = "${local.project}-deploy"
   description          = "Assumed by GitHub Actions (main branch only) to deploy the website"
-  assume_role_policy   = data.aws_iam_policy_document.deploy_trust.json
+  assume_role_policy   = data.aws_iam_policy_document.deploy_trust[0].json
   max_session_duration = 3600
 }
 
 # Least privilege: sync files to the one site bucket, clear the one
 # distribution's cache. Nothing else. (Plus uploading code to the project Lambdas.)
 data "aws_iam_policy_document" "deploy_permissions" {
+  count = local.is_main ? 1 : 0
+
   statement {
     sid       = "ListSiteBucket"
     actions   = ["s3:ListBucket"]
@@ -83,12 +91,31 @@ data "aws_iam_policy_document" "deploy_permissions" {
 }
 
 resource "aws_iam_role_policy" "deploy" {
+  count = local.is_main ? 1 : 0
+
   name   = "deploy-website"
-  role   = aws_iam_role.deploy.id
-  policy = data.aws_iam_policy_document.deploy_permissions.json
+  role   = aws_iam_role.deploy[0].id
+  policy = data.aws_iam_policy_document.deploy_permissions[0].json
+}
+
+# These used to be single resources; tell Terraform they're the same ones, now
+# with a count, so nothing is destroyed and re-created.
+moved {
+  from = aws_iam_openid_connect_provider.github
+  to   = aws_iam_openid_connect_provider.github[0]
+}
+
+moved {
+  from = aws_iam_role.deploy
+  to   = aws_iam_role.deploy[0]
+}
+
+moved {
+  from = aws_iam_role_policy.deploy
+  to   = aws_iam_role_policy.deploy[0]
 }
 
 output "deploy_role_arn" {
   description = "Role GitHub Actions assumes (stored as repo variable AWS_DEPLOY_ROLE_ARN)."
-  value       = aws_iam_role.deploy.arn
+  value       = one(aws_iam_role.deploy[*].arn)
 }

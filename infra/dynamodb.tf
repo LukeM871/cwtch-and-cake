@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_dynamodb_table" "bookings" {
-  name         = "${var.project}-bookings"
+  name         = "${local.project}-bookings"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "pk"
 
@@ -51,7 +51,7 @@ resource "aws_dynamodb_table" "bookings" {
 }
 
 resource "aws_dynamodb_table" "slots" {
-  name         = "${var.project}-slots"
+  name         = "${local.project}-slots"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "pk"
 
@@ -69,7 +69,7 @@ resource "aws_dynamodb_table" "slots" {
 # Café content: the busy status, the menu and the deals (docs/API.md section 9).
 # pk + sk so the whole menu, in display order, is one Query on pk = "menu".
 resource "aws_dynamodb_table" "cafe" {
-  name         = "${var.project}-cafe"
+  name         = "${local.project}-cafe"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "pk"
   range_key    = "sk"
@@ -96,7 +96,7 @@ resource "aws_dynamodb_table" "cafe" {
 # summary row (pk "summary") with running totals for the approved reviews.
 # No TTL: reviews stay until the admin deletes them.
 resource "aws_dynamodb_table" "reviews" {
-  name         = "${var.project}-reviews"
+  name         = "${local.project}-reviews"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "pk"
 

@@ -30,7 +30,7 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
 # send "max-age=30", the menu "max-age=300"). Query strings are part of the
 # cache key so each day/type is cached separately.
 resource "aws_cloudfront_cache_policy" "api" {
-  name        = "${var.project}-api"
+  name        = "${local.project}-api"
   comment     = "Respect Cache-Control from the API; never cache by default"
   min_ttl     = 0
   default_ttl = 0
@@ -57,7 +57,7 @@ resource "aws_cloudfront_cache_policy" "api" {
 # Lambda answers "Cache-Control: no-store", and with the token in the key two
 # people could never share an answer anyway.
 resource "aws_cloudfront_cache_policy" "api_admin" {
-  name        = "${var.project}-api-admin"
+  name        = "${local.project}-api-admin"
   comment     = "Admin API: forwards the Cognito token; never cached (origin sends no-store)"
   min_ttl     = 0
   default_ttl = 0
@@ -90,7 +90,7 @@ data "aws_cloudfront_origin_request_policy" "all_except_host" {
 # Origin Access Control: CloudFront signs its requests to S3, so the bucket
 # can stay fully private.
 resource "aws_cloudfront_origin_access_control" "site" {
-  name                              = "${var.project}-site-oac"
+  name                              = "${local.project}-site-oac"
   description                       = "CloudFront access to the private site bucket"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -99,7 +99,7 @@ resource "aws_cloudfront_origin_access_control" "site" {
 
 # The security headers (docs/SECURITY.md section 1).
 resource "aws_cloudfront_response_headers_policy" "security" {
-  name    = "${var.project}-security-headers"
+  name    = "${local.project}-security-headers"
   comment = "Security headers from docs/SECURITY.md"
 
   security_headers_config {
@@ -142,7 +142,7 @@ resource "aws_cloudfront_response_headers_policy" "security" {
 
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
-  comment             = "${var.project} website"
+  comment             = "${local.project} website"
   default_root_object = "index.html"
   is_ipv6_enabled     = true
   http_version        = "http2and3"

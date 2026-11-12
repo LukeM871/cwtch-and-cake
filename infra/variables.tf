@@ -4,6 +4,16 @@ variable "project" {
   default     = "cwtch-and-cake"
 }
 
+locals {
+  # One complete copy of the system per Terraform workspace. "default" is the
+  # live site. Any other workspace (for example "proof") builds a separate,
+  # full copy named cwtch-and-cake-<workspace>-..., with its own state, so the
+  # whole stack can be built from nothing, tested and destroyed without
+  # touching the live one. Names can't collide, because they come from here.
+  is_main = terraform.workspace == "default"
+  project = local.is_main ? var.project : "${var.project}-${terraform.workspace}"
+}
+
 variable "region" {
   description = "Main AWS region (London)."
   type        = string

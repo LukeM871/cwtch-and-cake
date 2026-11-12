@@ -159,6 +159,8 @@ Too many requests get `429`, and the website shows "Busy right now, try again in
 | Review comment + display name (when the AI check is on) | Sent to Amazon Comprehend in **Ireland** (`eu-west-1`, inside the EU; London doesn't offer the check) for scoring | Not kept by this project; only the score is stored | The review is public once approved anyway |
 | Admin login | Cognito: a username, password hash and MFA secret. **No email or phone number** | Until deleted | Never |
 | CloudWatch logs | CloudWatch | 14 days | Never |
+| CloudWatch metrics (counts of bookings, reviews, bots...) | CloudWatch | 15 months (AWS's fixed retention) | Never, and they hold **no personal data**: just numbers |
+| The café owner's alarm email address | An SNS subscription, plus a gitignored settings file on the owner's laptop | Until the subscription is removed | Never |
 
 - **Logs never contain emails, names or request bodies.** Only the booking reference, route, status code and error type are logged.
 - Collect only what's needed. No accounts, no tracking cookies, no analytics scripts.
@@ -172,14 +174,22 @@ Too many requests get `429`, and the website shows "Busy right now, try again in
 - On the laptop, `aws login` gives short-lived credentials.
 - `.gitignore` blocks: `*.tfstate*`, `*.tfvars`, `.env*`, `*.pem`, `*.key`, personal notes and plans.
 - Before the repo is made public (Phase 8), scan the whole history with `gitleaks`.
+- **Throwaway copies of the stack** (a separate Terraform workspace, used to prove the whole system rebuilds from code) get their own names for everything and **no GitHub deploy access at all**: the OIDC provider and the deploy role only exist in the live stack.
 
 ---
 
 ## 9. Monitoring
 
-- An alarm triggers if any Lambda has **more than 5 errors in 5 minutes**, and it emails the admin through SNS.
-- A dashboard shows bookings, reviews, errors and response times.
-- Every Lambda's logs are kept for 14 days.
+Everything here is in Terraform (`infra/monitoring.tf`) and stays inside CloudWatch's always-free tier.
+
+- **Alarm 1, `backend-errors`:** **more than 5 errors in 5 minutes** across the backend → email. It adds up AWS's own Lambda `Errors` for all 8 functions **plus** our own `ServerError` count. The second part matters: a crash that the API safety net (`cwtch/http.py`) turns into a friendly 500 is a *successful* Lambda run as far as AWS knows, so AWS's metric alone would never see it.
+- **Alarm 2, `daily-reset-failed`:** **any** error in the admin Lambda → email. A failed 06:00 job is retried twice, which makes 3 errors and is never enough for alarm 1. Web requests can't trip this alarm, because their crashes become 500s.
+- **Both alarms were tested on purpose** (Phase 6): ALARM → email → OK → email.
+- **The alarm topic (SNS)** has a policy that lets **only these two alarms**, from this account, over **HTTPS**, publish to it. It isn't encrypted with SNS's AWS-managed key, because CloudWatch can't publish to a topic that uses it, and a customer-managed key costs $1 a month. Alarm emails only name the alarm and the numbers, never customer data.
+- **The alarm email address is not in Git.** It lives in `infra/alarm.auto.tfvars` (covered by `*.tfvars` in `.gitignore`), the variable is marked `sensitive` (so Terraform doesn't print it), and AWS only sends to it after the owner clicks "Confirm subscription".
+- **A dashboard** shows bookings, reviews, bots caught, API traffic and errors, CloudFront traffic, response times and the alarms. The business numbers are **counted by the Lambdas themselves** through CloudWatch's embedded metric format: a JSON line in the normal logs, so **no extra IAM permission** and no extra API call. They are plain counts with **no personal data**: never names, emails or booking references (the tests check this).
+- **Logs:** every Lambda's logs are kept for **14 days**, then deleted. They never contain names, emails or notes (section 7).
+- **Anything that isn't an API Gateway event** (only possible through a direct `lambda:Invoke`, which needs AWS credentials) is refused with a real error, so it shows up in the metrics instead of being silently ignored.
 
 ---
 
@@ -198,4 +208,6 @@ Too many requests get `429`, and the website shows "Busy right now, try again in
 | Abuse of admin routes | Cognito login with **required MFA**, no self sign-up, JWT check at API Gateway, then the Lambda checks it's an access token for the `admins` group |
 | A stolen admin token | Tokens last 60 minutes; the strict CSP blocks the injected scripts that would steal one; the admin Lambda still can't touch bookings or the slots table |
 | A stolen deploy credential | No long-lived keys exist. The OIDC role only works from this repo's `main` branch and can only deploy this site |
+| Something breaks and nobody notices | Two CloudWatch alarms email the owner (crashes counted even when they're turned into friendly 500s); a dashboard; both alarms tested on purpose |
+| Losing the whole AWS setup | Everything is code: a complete copy was built from nothing (94 resources in ~3 minutes), tested and destroyed. Data that matters (the menu) is reseeded from `scripts/menu.json` |
 | A surprise AWS bill | $5 budget alert, on-demand pricing, rate limits, no always-on servers |

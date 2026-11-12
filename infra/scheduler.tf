@@ -12,7 +12,7 @@
 # GROUP a schedule is in, so a dedicated group lets the role below trust this
 # project's schedules only (not every schedule in the account's default group).
 resource "aws_scheduler_schedule_group" "cafe" {
-  name = var.project
+  name = local.project
 }
 
 data "aws_iam_policy_document" "scheduler_trust" {
@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "scheduler_trust" {
 }
 
 resource "aws_iam_role" "scheduler" {
-  name               = "${var.project}-scheduler"
+  name               = "${local.project}-scheduler"
   description        = "Lets the 06:00 schedule start the admin Lambda, and nothing else"
   assume_role_policy = data.aws_iam_policy_document.scheduler_trust.json
 }
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy" "scheduler" {
 }
 
 resource "aws_scheduler_schedule" "daily_reset" {
-  name        = "${var.project}-daily-reset"
+  name        = "${local.project}-daily-reset"
   group_name  = aws_scheduler_schedule_group.cafe.name
   description = "06:00 UK time: clear sold-out flags (fresh bake) and recount the review summary"
 

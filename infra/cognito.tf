@@ -13,7 +13,7 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_cognito_user_pool" "admin" {
-  name = "${var.project}-admin"
+  name = "${local.project}-admin"
 
   # Essentials is needed for the newer "managed login" page. Free for the
   # first 10,000 monthly active users (there's one).
@@ -65,7 +65,7 @@ resource "aws_cognito_user_group" "admins" {
 
 # The hosted login page lives at https://<domain>.auth.<region>.amazoncognito.com
 resource "aws_cognito_user_pool_domain" "admin" {
-  domain                = "${var.project}-admin"
+  domain                = "${local.project}-admin"
   user_pool_id          = aws_cognito_user_pool.admin.id
   managed_login_version = 2 # the newer "managed login" page
 }
@@ -81,7 +81,7 @@ locals {
 # The admin page's "app client". Public (no client secret): JavaScript in a
 # browser can't keep a secret, so the login code is protected with PKCE instead.
 resource "aws_cognito_user_pool_client" "admin" {
-  name         = "${var.project}-admin-page"
+  name         = "${local.project}-admin-page"
   user_pool_id = aws_cognito_user_pool.admin.id
 
   generate_secret                      = false

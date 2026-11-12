@@ -9,6 +9,8 @@ import logging
 import os
 from typing import Any, Callable
 
+from . import metrics
+
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
@@ -88,7 +90,14 @@ def path_param(event: dict, name: str) -> str:
 
 
 def run(event: dict, fn: Callable[[dict], dict]) -> dict:
-    """Runs a request: ApiError → its JSON error, a crash → 500. Logs never hold personal data."""
+    """Runs a request: ApiError → its JSON error, a crash → 500. Logs never hold personal data.
+
+    A crash caught here is a successful Lambda run as far as AWS is concerned (it
+    returned a 500), so AWS's own "Errors" metric never sees it. The ServerError
+    metric is what lets the alarm notice it."""
+    if not isinstance(event, dict):
+        # Only a direct invoke can send this. Fail loudly: it shows in the Errors metric.
+        raise TypeError("not an API Gateway event")
     route = event.get("routeKey", "?")
     try:
         result = fn(event)
@@ -99,6 +108,7 @@ def run(event: dict, fn: Callable[[dict], dict]) -> dict:
         return respond(err.status, error_body(err))
     except Exception as exc:  # noqa: BLE001 - last-resort safety net
         log.error(json.dumps({"route": route, "status": 500, "exception": type(exc).__name__}))
+        metrics.count(metrics.SERVER_ERROR, route=str(route)[:100])
         return respond(500, {"error": "server", "message": "Sorry, something went wrong. Please try again."})
 
 

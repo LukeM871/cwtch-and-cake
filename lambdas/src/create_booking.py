@@ -7,7 +7,7 @@ from datetime import date
 
 from botocore.exceptions import ClientError
 
-from cwtch import aws, emails, refs, rules, validate
+from cwtch import aws, emails, metrics, refs, rules, validate
 from cwtch.http import ApiError, api_handler, parse_json, respond
 
 log = logging.getLogger()
@@ -79,6 +79,7 @@ def _save(b: dict) -> None:
                 raise
             reasons = [r.get("Code") for r in exc.response.get("CancellationReasons", [])]
             if reasons and reasons[0] == "ConditionalCheckFailed":
+                metrics.count(metrics.SLOT_FULL, bookingType=b["type"])
                 raise ApiError(409, "slot_full", "Sorry, that slot has just been taken. Please pick another time.") from None
             if len(reasons) > 1 and reasons[1] == "ConditionalCheckFailed" and attempt + 1 < MAX_REFERENCE_ATTEMPTS:
                 continue  # reference clash (very unlikely): try a new one
@@ -91,6 +92,7 @@ def handler(event: dict) -> dict:
 
     if validate.is_honeypot_filled(body):
         # Bot: look normal, save nothing, send nothing.
+        metrics.count(metrics.BOT_CAUGHT, form="booking")
         return respond(201, {"reference": refs.new_reference(), "emailSent": False})
 
     booking, errors = validate.booking(body, rules.now_uk())
@@ -100,6 +102,7 @@ def handler(event: dict) -> dict:
     _save(booking)
     email_sent = emails.booking_confirmed(booking)
     log.info(json.dumps({"booking": "created", "reference": booking["reference"], "type": booking["type"]}))
+    metrics.count(metrics.BOOKING_CREATED, bookingType=booking["type"])
 
     result = {k: booking[k] for k in ("reference", "type", "date", "time", "partySize")}
     if booking.get("classKind"):

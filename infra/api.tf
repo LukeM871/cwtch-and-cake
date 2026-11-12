@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_apigatewayv2_api" "api" {
-  name          = "${var.project}-api"
+  name          = "${local.project}-api"
   protocol_type = "HTTP"
   description   = "Cwtch & Cake API (see docs/API.md)"
 }

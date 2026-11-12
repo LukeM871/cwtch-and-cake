@@ -11,7 +11,7 @@ from datetime import date, datetime
 
 from botocore.exceptions import ClientError
 
-from cwtch import aws, reviews, rules, toxicity, validate
+from cwtch import aws, metrics, reviews, rules, toxicity, validate
 from cwtch.http import ApiError, api_handler, parse_json, respond, same_secret, validation_error
 
 log = logging.getLogger()
@@ -129,10 +129,13 @@ def handler(event: dict) -> dict:
 
     if validate.is_honeypot_filled(body):
         # Bot: look normal, save nothing, call nothing.
+        metrics.count(metrics.BOT_CAUGHT, form="review")
         return respond(202, {"reviewId": reviews.new_id(now), "status": "pending", "verified": False, "message": THANKS})
 
     review, errors = validate.review(body)  # fields + word filter
     if errors:
+        if errors.get("comment") == validate.FRIENDLY or errors.get("displayName") == validate.NAME_BLOCKED:
+            metrics.count(metrics.REVIEW_BLOCKED, reason="word-filter")
         raise validation_error(errors)
 
     if "reference" in review:
@@ -141,11 +144,12 @@ def handler(event: dict) -> dict:
     verdict = toxicity.check(review["comment"], review["displayName"])
     if verdict.checked and verdict.score >= toxicity.REJECT_AT:
         log.info(json.dumps({"review": "rejected", "reason": "toxicity", "score": round(verdict.score, 3)}))
+        metrics.count(metrics.REVIEW_BLOCKED, reason="toxicity")
         fields = {}
         if verdict.comment_score >= toxicity.REJECT_AT:
             fields["comment"] = validate.FRIENDLY
         if verdict.name_score >= toxicity.REJECT_AT:
-            fields["displayName"] = "Please choose a different name"
+            fields["displayName"] = validate.NAME_BLOCKED
         raise validation_error(fields)
 
     review_id = _save(review, verdict, now)
@@ -157,4 +161,8 @@ def handler(event: dict) -> dict:
         "flagged": verdict.flagged,
         "toxicity": round(verdict.score, 3) if verdict.checked else None,
     }))
+    if verdict.flagged:
+        metrics.count(metrics.REVIEW_SUBMITTED, metrics.REVIEW_FLAGGED, verified=verified)
+    else:
+        metrics.count(metrics.REVIEW_SUBMITTED, verified=verified)
     return respond(202, {"reviewId": review_id, "status": "pending", "verified": verified, "message": THANKS})

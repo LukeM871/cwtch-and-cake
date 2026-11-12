@@ -7,7 +7,7 @@ from datetime import date
 
 from botocore.exceptions import ClientError
 
-from cwtch import aws, emails, rules, validate
+from cwtch import aws, emails, metrics, rules, validate
 from cwtch.http import ApiError, api_handler, parse_json, respond, same_secret
 
 log = logging.getLogger()
@@ -27,6 +27,7 @@ def handler(event: dict) -> dict:
     email = validate.email(body.get("email"), errors)
 
     if validate.is_honeypot_filled(body):
+        metrics.count(metrics.BOT_CAUGHT, form="cancel")
         return respond(200, {"reference": reference, "cancelled": True})
     if errors:
         raise ApiError(400, "validation", "Please check the highlighted fields.", errors)
@@ -72,4 +73,5 @@ def handler(event: dict) -> dict:
 
     emails.booking_cancelled(b)
     log.info(json.dumps({"booking": "cancelled", "reference": reference}))
+    metrics.count(metrics.BOOKING_CANCELLED)
     return respond(200, {"reference": reference, "cancelled": True})

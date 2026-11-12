@@ -181,13 +181,13 @@ data "aws_iam_policy_document" "lambda_assume" {
 
 resource "aws_iam_role" "fn" {
   for_each           = local.functions
-  name               = "${var.project}-${each.key}"
+  name               = "${local.project}-${each.key}"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume.json
 }
 
 resource "aws_cloudwatch_log_group" "fn" {
   for_each          = local.functions
-  name              = "/aws/lambda/${var.project}-${each.key}"
+  name              = "/aws/lambda/${local.project}-${each.key}"
   retention_in_days = 14
 }
 
@@ -244,12 +244,16 @@ resource "aws_iam_role_policy" "fn" {
 resource "aws_lambda_function" "fn" {
   for_each = local.functions
 
-  function_name    = "${var.project}-${each.key}"
-  role             = aws_iam_role.fn[each.key].arn
-  handler          = each.value.handler
-  runtime          = "python3.12"
-  architectures    = ["arm64"] # Graviton: cheaper and faster for Python
-  memory_size      = 128
+  function_name = "${local.project}-${each.key}"
+  role          = aws_iam_role.fn[each.key].arn
+  handler       = each.value.handler
+  runtime       = "python3.12"
+  architectures = ["arm64"] # Graviton: cheaper and faster for Python
+  # Lambda gives CPU in proportion to memory. Measured live (Phase 6) on a new
+  # instance's first request: 128 MB ~1.9 s, 256 MB 0.76 s, 512 MB 0.33 s,
+  # 1024 MB 0.25 s (warm: 30-60 ms → ~14 ms). 512 MB is the sweet spot, and it
+  # stays far inside the free tier: requests are shorter, so GB-seconds barely move.
+  memory_size      = 512
   timeout          = try(each.value.timeout, 10)
   filename         = data.archive_file.lambda_bundle.output_path
   source_code_hash = data.archive_file.lambda_bundle.output_base64sha256
@@ -268,6 +272,7 @@ resource "aws_lambda_function" "fn" {
       COMPREHEND_REGION = var.toxicity_check_region
       COGNITO_CLIENT_ID = aws_cognito_user_pool_client.admin.id
       ADMIN_GROUP       = aws_cognito_user_group.admins.name
+      METRICS_NAMESPACE = local.metric_namespace # each copy of the stack counts separately
     }
   }
 
