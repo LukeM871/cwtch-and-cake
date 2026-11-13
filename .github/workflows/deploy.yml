@@ -36,6 +36,9 @@ jobs:
           if grep -rnEi '\son[a-z]+=' site --include='*.html'; then echo "::error::Inline event handler (onclick etc.) found"; bad=1; fi
           exit $bad
 
+      - name: Every page has the current header and footer
+        run: python3 scripts/site_partials.py --check
+
       - name: Set up Python
         if: hashFiles('lambdas/**/*.py') != ''
         uses: actions/setup-python@v7
@@ -78,17 +81,8 @@ jobs:
             echo "✅ cwtch-and-cake-$fn updated"
           done
 
-      - name: Upload files (CSS, images, fonts...)
-        run: >
-          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/"
-          --delete --exclude "*.html"
-          --cache-control "public, max-age=3600"
-
-      - name: Upload pages (HTML, always revalidated)
-        run: >
-          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/"
-          --exclude "*" --include "*.html"
-          --cache-control "no-cache"
+      - name: Upload the website (explicit file types and cache rules)
+        run: bash scripts/deploy_site.sh "${{ vars.SITE_BUCKET }}"
 
       - name: Clear CloudFront cache
         run: |

@@ -1,0 +1,59 @@
+{
+ "/api/reviews": {
+  "summary": {
+   "averageRating": 1.0,
+   "count": 1,
+   "topTags": []
+  },
+  "reviews": [
+   {
+    "reviewId": "rv_01WORST000000000000000002",
+    "rating": 1,
+    "tags": [],
+    "comment": "Great coffee, ta xx",
+    "displayName": "Jo",
+    "courseYear": null,
+    "verified": false,
+    "createdAt": "2026-11-12T22:15:02Z"
+   }
+  ],
+  "nextCursor": null
+ },
+ "/api/admin/reviews": {
+  "status": "pending",
+  "reviews": [
+   {
+    "reviewId": "rv_01WORST000000000000000002",
+    "rating": 1,
+    "tags": [],
+    "comment": "Great coffee, ta xx",
+    "displayName": "Jo",
+    "courseYear": null,
+    "verified": false,
+    "createdAt": "2026-11-12T22:15:02Z",
+    "status": "pending",
+    "flagged": false,
+    "toxicityScore": null,
+    "toxicityLabels": [],
+    "moderatedAt": null
+   }
+  ],
+  "nextCursor": null
+ },
+ "/api/admin/bookings": {
+  "date": "2026-11-12",
+  "bookings": [
+   {
+    "reference": "CC-ABCDEF",
+    "type": "class",
+    "classKind": "latte-art",
+    "time": "10:00",
+    "partySize": 1,
+    "name": "J",
+    "email": "a@b.co",
+    "society": null,
+    "notes": null
+   }
+  ]
+ }
+}

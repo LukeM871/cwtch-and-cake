@@ -1,0 +1,25 @@
+{
+ "/api/reviews": {
+  "summary": {
+   "averageRating": null,
+   "count": 0,
+   "topTags": []
+  },
+  "reviews": [],
+  "nextCursor": null
+ },
+ "/api/admin/reviews": {
+  "status": "pending",
+  "reviews": [],
+  "nextCursor": null
+ },
+ "/api/menu": {
+  "currency": "GBP",
+  "sections": [],
+  "deals": []
+ },
+ "/api/admin/bookings": {
+  "date": "2026-11-12",
+  "bookings": []
+ }
+}

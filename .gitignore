@@ -47,3 +47,6 @@ screenshots/
 
 # Terraform build output (Lambda zip)
 infra/.build/
+
+# Downloaded photo originals (the photo build script caches them here)
+scripts/photos/.cache/

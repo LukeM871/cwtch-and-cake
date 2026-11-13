@@ -140,6 +140,17 @@ resource "aws_cloudfront_response_headers_policy" "security" {
   }
 }
 
+# Clean page addresses for the website (Phase 7): /menu/ is served from
+# /menu/index.html, and /menu redirects to /menu/. Runs at the edge on page
+# requests only (not /api/*), and is free at this traffic (2 million a month).
+resource "aws_cloudfront_function" "pretty_urls" {
+  name    = "${local.project}-pretty-urls"
+  runtime = "cloudfront-js-2.0"
+  comment = "Serve /page/ from /page/index.html; redirect /page to /page/"
+  publish = true
+  code    = file("${path.module}/functions/pretty-urls.js")
+}
+
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   comment             = "${local.project} website"
@@ -205,6 +216,11 @@ resource "aws_cloudfront_distribution" "site" {
     compress                   = true
     cache_policy_id            = data.aws_cloudfront_cache_policy.caching_optimized.id
     response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.pretty_urls.arn
+    }
   }
 
   # A private S3 bucket answers 403 (not 404) for a missing file; show the

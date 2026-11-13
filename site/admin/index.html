@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Admin · Cwtch &amp; Cake</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fbf5ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#140d0a" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/fraunces-soft.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/theme.js"></script>
+  <script type="module" src="/js/admin.js"></script>
+</head>
+<body>
+<!-- @header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="Cwtch &amp; Cake, home">
+      <svg class="logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <path class="steam" d="M44 30c-6-6 6-10 0-16M58 30c-6-6 6-10 0-16"/>
+        <path class="heart" d="M51 40c-3-4-10-2-8 4 1 3 8 8 8 8s7-5 8-8c2-6-5-8-8-4z"/>
+        <path class="cup" d="M30 56h44l-6 50H36z"/>
+        <rect class="lid" x="27" y="50" width="50" height="8" rx="3"/>
+        <rect class="sleeve" x="33" y="72" width="38" height="14" rx="2"/>
+        <path class="cake" d="M114.0 92.0A5.2 5.2 0 0 1 112.7 99.2A5.2 5.2 0 0 1 109.1 105.5A5.2 5.2 0 0 1 103.5 110.2A5.2 5.2 0 0 1 96.6 112.7A5.2 5.2 0 0 1 89.4 112.7A5.2 5.2 0 0 1 82.5 110.2A5.2 5.2 0 0 1 76.9 105.5A5.2 5.2 0 0 1 73.3 99.2A5.2 5.2 0 0 1 72.0 92.0A5.2 5.2 0 0 1 73.3 84.8A5.2 5.2 0 0 1 76.9 78.5A5.2 5.2 0 0 1 82.5 73.8A5.2 5.2 0 0 1 89.4 71.3A5.2 5.2 0 0 1 96.6 71.3A5.2 5.2 0 0 1 103.5 73.8A5.2 5.2 0 0 1 109.1 78.5A5.2 5.2 0 0 1 112.7 84.8A5.2 5.2 0 0 1 114.0 92.0Z"/>
+        <circle class="griddle" cx="93" cy="92" r="14.5"/>
+        <ellipse class="currant" cx="86" cy="86" rx="2.2" ry="1.6" transform="rotate(-25 86 86)"/>
+        <ellipse class="currant" cx="99" cy="84" rx="2" ry="1.5" transform="rotate(20 99 84)"/>
+        <ellipse class="currant" cx="92" cy="95" rx="2.2" ry="1.6" transform="rotate(10 92 95)"/>
+        <ellipse class="currant" cx="102" cy="97" rx="1.9" ry="1.4" transform="rotate(-35 102 97)"/>
+        <ellipse class="currant" cx="84" cy="99" rx="1.8" ry="1.3" transform="rotate(30 84 99)"/>
+        <circle class="sugar" cx="90" cy="81" r="0.9"/><circle class="sugar" cx="96" cy="90" r="0.9"/>
+        <circle class="sugar" cx="80" cy="92" r="0.8"/><circle class="sugar" cx="105" cy="89" r="0.8"/>
+        <circle class="sugar" cx="97" cy="103" r="0.9"/><circle class="sugar" cx="88" cy="105" r="0.7"/>
+      </svg>
+      <span>Cwtch &amp; Cake</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a href="/menu/">Menu</a></li>
+        <li><a href="/deals/">Student deals</a></li>
+        <li><a href="/whats-on/">What's on</a></li>
+        <li><a href="/reviews/">Reviews</a></li>
+        <li><a href="/about/">Find us</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-sm header-cta" href="/book/">Book a table</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Main, phone">
+      <ul>
+        <li><a href="/menu/">Menu</a></li>
+        <li><a href="/deals/">Student deals</a></li>
+        <li><a href="/whats-on/">What's on</a></li>
+        <li><a href="/reviews/">Reviews</a></li>
+        <li><a href="/about/">Find us</a></li>
+      </ul>
+      <a class="btn btn-primary btn-lg" href="/book/">Book a class, room or table</a>
+    </nav>
+  </div>
+</header>
+<!-- /@header -->
+
+<main id="main">
+  <div class="wrap page-head admin-head">
+    <div class="stack">
+      <p class="eyebrow">Café admin</p>
+      <h1 class="h2-size">Behind the counter</h1>
+    </div>
+    <div class="admin-who" data-who hidden>
+      <span class="muted" data-who-name></span>
+      <button class="btn btn-secondary btn-sm" type="button" data-logout>Log out</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="card card-pad stack login-card" data-login hidden aria-labelledby="login-title">
+      <h2 id="login-title" class="h3">Log in to manage the café</h2>
+      <p class="muted">You'll go to the secure login page, then come straight back. You'll need your password and the 6-digit code from your authenticator app.</p>
+      <p class="notice notice-error" data-login-error role="alert" hidden></p>
+      <button class="btn btn-primary btn-lg" type="button" data-login-btn>Log in</button>
+      <p class="hint">Staff only. This page isn't linked from the site, and every request is checked by API Gateway and again by the server.</p>
+    </section>
+
+    <div data-app hidden>
+      <div class="tabs" role="tablist" aria-label="Admin sections">
+        <button class="tab" role="tab" id="tab-reviews" aria-controls="panel-reviews" aria-selected="true">Reviews <span class="count" data-pending-count></span></button>
+        <button class="tab" role="tab" id="tab-status" aria-controls="panel-status" aria-selected="false" tabindex="-1">How busy</button>
+        <button class="tab" role="tab" id="tab-menu" aria-controls="panel-menu" aria-selected="false" tabindex="-1">Menu</button>
+        <button class="tab" role="tab" id="tab-bookings" aria-controls="panel-bookings" aria-selected="false" tabindex="-1">Bookings</button>
+      </div>
+
+      <section class="panel" role="tabpanel" id="panel-reviews" aria-labelledby="tab-reviews">
+        <div class="panel-bar">
+          <div class="chips" role="group" aria-label="Review status">
+            <button class="chip" type="button" data-rstatus="pending" aria-pressed="true">Waiting</button>
+            <button class="chip" type="button" data-rstatus="approved" aria-pressed="false">Approved</button>
+            <button class="chip" type="button" data-rstatus="rejected" aria-pressed="false">Rejected</button>
+          </div>
+          <p class="hint" data-review-hint>Oldest first, so nobody waits too long.</p>
+        </div>
+        <div class="review-list" data-admin-reviews aria-live="polite"></div>
+        <button class="btn btn-secondary" type="button" data-admin-more hidden>Load more</button>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-status" aria-labelledby="tab-status" hidden>
+        <form class="card card-pad form status-form" data-status-form>
+          <p class="status-pill" data-status aria-live="polite"><span class="dot"></span><strong class="status-label">Now</strong><span class="sep" aria-hidden="true">·</span><span class="status-detail">Checking…</span></p>
+          <fieldset>
+            <legend>How busy is it right now?</legend>
+            <div class="level-grid">
+              <span class="level"><input type="radio" name="level" id="lv-quiet" value="quiet"><label for="lv-quiet"><span class="dot dot-quiet"></span>Quiet<small>Plenty of seats</small></label></span>
+              <span class="level"><input type="radio" name="level" id="lv-steady" value="steady"><label for="lv-steady"><span class="dot dot-steady"></span>Steady<small>Some seats free</small></label></span>
+              <span class="level"><input type="radio" name="level" id="lv-busy" value="busy"><label for="lv-busy"><span class="dot dot-busy"></span>Busy<small>A few seats left</small></label></span>
+              <span class="level"><input type="radio" name="level" id="lv-packed" value="packed"><label for="lv-packed"><span class="dot dot-packed"></span>Packed<small>Try again later</small></label></span>
+            </div>
+            <p class="field-error" data-error-for="level" hidden></p>
+          </fieldset>
+          <div class="field">
+            <label for="status-message">A short note <span class="optional">(optional)</span></label>
+            <input class="input" id="status-message" name="message" maxlength="60" placeholder="About 10 seats free by the window">
+            <span class="counter" data-status-counter>0 / 60</span>
+            <p class="field-error" data-error-for="message" hidden></p>
+          </div>
+          <p class="hint">The site shows "Not updated" again after 3 hours, so an old "Quiet" never lingers.</p>
+          <button class="btn btn-primary" type="submit" data-status-submit>Update the site</button>
+        </form>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-menu" aria-labelledby="tab-menu" hidden>
+        <p class="hint">Sold-out flags reset at 06:00 every morning, when the Welsh cakes are baked. Price changes stay until you change them again.</p>
+        <div data-admin-menu aria-live="polite"></div>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-bookings" aria-labelledby="tab-bookings" hidden>
+        <div class="panel-bar">
+          <div class="field inline-field">
+            <label for="booking-date">Bookings for</label>
+            <input class="input" type="date" id="booking-date" data-booking-date>
+          </div>
+          <p class="hint" data-booking-count></p>
+        </div>
+        <div data-admin-bookings aria-live="polite"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- @footer -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Cwtch &amp; Cake, home">
+        <svg class="logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <path class="steam" d="M44 30c-6-6 6-10 0-16M58 30c-6-6 6-10 0-16"/>
+          <path class="heart" d="M51 40c-3-4-10-2-8 4 1 3 8 8 8 8s7-5 8-8c2-6-5-8-8-4z"/>
+          <path class="cup" d="M30 56h44l-6 50H36z"/>
+          <rect class="lid" x="27" y="50" width="50" height="8" rx="3"/>
+          <rect class="sleeve" x="33" y="72" width="38" height="14" rx="2"/>
+          <path class="cake" d="M114.0 92.0A5.2 5.2 0 0 1 112.7 99.2A5.2 5.2 0 0 1 109.1 105.5A5.2 5.2 0 0 1 103.5 110.2A5.2 5.2 0 0 1 96.6 112.7A5.2 5.2 0 0 1 89.4 112.7A5.2 5.2 0 0 1 82.5 110.2A5.2 5.2 0 0 1 76.9 105.5A5.2 5.2 0 0 1 73.3 99.2A5.2 5.2 0 0 1 72.0 92.0A5.2 5.2 0 0 1 73.3 84.8A5.2 5.2 0 0 1 76.9 78.5A5.2 5.2 0 0 1 82.5 73.8A5.2 5.2 0 0 1 89.4 71.3A5.2 5.2 0 0 1 96.6 71.3A5.2 5.2 0 0 1 103.5 73.8A5.2 5.2 0 0 1 109.1 78.5A5.2 5.2 0 0 1 112.7 84.8A5.2 5.2 0 0 1 114.0 92.0Z"/>
+          <circle class="griddle" cx="93" cy="92" r="14.5"/>
+          <circle class="currant" cx="86" cy="86" r="1.9"/><circle class="currant" cx="99" cy="84" r="1.8"/>
+          <circle class="currant" cx="92" cy="95" r="1.9"/><circle class="currant" cx="102" cy="97" r="1.7"/>
+        </svg>
+        <span>Cwtch &amp; Cake</span>
+      </a>
+      <p>A cosy student café in Cathays, Cardiff. Good coffee, Welsh cakes baked every morning, and somewhere warm to study.</p>
+    </div>
+    <div>
+      <h2>Opening hours</h2>
+      <dl class="hours">
+        <dt>Mon to Fri</dt><dd>08:00 to 20:00</dd>
+        <dt>Sat and Sun</dt><dd>09:00 to 18:00</dd>
+      </dl>
+      <p class="footer-note">Exam season (January, May and June): weekdays until 21:00.</p>
+    </div>
+    <div>
+      <h2>Explore</h2>
+      <ul>
+        <li><a href="/menu/">Menu</a></li>
+        <li><a href="/deals/">Student deals</a></li>
+        <li><a href="/book/">Book a class, room or table</a></li>
+        <li><a href="/book/cancel/">Cancel a booking</a></li>
+        <li><a href="/reviews/">Reviews</a></li>
+        <li><a href="/whats-on/">What's on</a></li>
+        <li><a href="/about/">About and find us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Colours</h2>
+      <div class="theme-switch" role="radiogroup" aria-label="Colour theme">
+        <input type="radio" name="theme" id="theme-auto" value="auto" checked><label for="theme-auto"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 5h16v11H4zM9 20h6"/></svg>Auto</label>
+        <input type="radio" name="theme" id="theme-light" value="light"><label for="theme-light"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 16a4 4 0 100-8 4 4 0 000 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Light</label>
+        <input type="radio" name="theme" id="theme-dark" value="dark"><label for="theme-dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg>Dark</label>
+      </div>
+      <p class="footer-note">Auto follows your phone or laptop.</p>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span>© <span data-year>2026</span> Cwtch &amp; Cake · <strong>Fictional business, built as a portfolio project</strong></span>
+    <span><a href="/privacy/">Privacy</a> · <a href="/about/#credits">Photo credits</a></span>
+  </div>
+</footer>
+<!-- /@footer -->
+</body>
+</html>

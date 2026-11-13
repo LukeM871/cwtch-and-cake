@@ -1,0 +1,340 @@
+{
+ "/api/reviews": {
+  "summary": {
+   "averageRating": 4.3,
+   "count": 1284,
+   "topTags": [
+    "best-welsh-cakes",
+    "plenty-of-plugs",
+    "good-value"
+   ]
+  },
+  "reviews": [
+   {
+    "reviewId": "rv_01WORST000000000000000001",
+    "rating": 5,
+    "tags": [
+     "best-welsh-cakes",
+     "plenty-of-plugs",
+     "good-value"
+    ],
+    "comment": "I've been coming here since freshers' week and it's honestly the reason I passed second year. The salted caramel Welsh cakes are unreal, the oat flat white is the best in Cathays, and there's a plug at literally every seat.\n\nSmall things: it gets packed after 12 in exam season, so book a study room if you need quiet. The Wi-Fi dropped once during a video call but the staff sorted it in a minute. Also the Cwtch Deal is unbeatable value. Diolch o galon to everyone behind the counter!",
+    "displayName": "Christopher Montgomery-Ashford",
+    "courseYear": "Postgrad",
+    "verified": true,
+    "createdAt": "2023-11-13T22:15:22Z"
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000002",
+    "rating": 1,
+    "tags": [],
+    "comment": "Great coffee, ta xx",
+    "displayName": "Jo",
+    "courseYear": null,
+    "verified": false,
+    "createdAt": "2026-11-12T22:15:02Z"
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000003",
+    "rating": 3,
+    "tags": [
+     "fast-wifi"
+    ],
+    "comment": "Wi-Fi's fine but bookmark this: https://example.com/workspaces/cathays/study-groups/q3-revision/docs/9f8e7d6c5b4a?tab=comments&filter=unresolved <script>alert(1)</script> &amp; **bold**",
+    "displayName": "🦊 Fox",
+    "courseYear": "1st year",
+    "verified": false,
+    "createdAt": "2026-10-31T22:15:22Z"
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000004",
+    "rating": 4,
+    "tags": [
+     "cosy",
+     "quiet",
+     "friendly-staff"
+    ],
+    "comment": "أفضل مقهى للدراسة في كارديف. The staff are lovely and it's always warm.",
+    "displayName": "نور الهدى عبد الرحمن",
+    "courseYear": "Staff",
+    "verified": true,
+    "createdAt": "2025-12-17T22:15:22Z"
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000005",
+    "rating": 5,
+    "tags": [
+     "great-coffee"
+    ],
+    "comment": "Đặng here 👩🏽‍💻 Bổ sung: cà phê ngon, bánh Welsh rất tuyệt vời. Mae'r cacennau cri yn wych!",
+    "displayName": "Đặng Thị Ngọc Hân",
+    "courseYear": "4th year",
+    "verified": false,
+    "createdAt": "2026-11-11T20:15:22Z"
+   }
+  ],
+  "nextCursor": "eyJpZCI6InJ2XzAxIn0"
+ },
+ "/api/admin/reviews": {
+  "status": "pending",
+  "reviews": [
+   {
+    "reviewId": "rv_01WORST000000000000000001",
+    "rating": 5,
+    "tags": [
+     "best-welsh-cakes",
+     "plenty-of-plugs",
+     "good-value"
+    ],
+    "comment": "I've been coming here since freshers' week and it's honestly the reason I passed second year. The salted caramel Welsh cakes are unreal, the oat flat white is the best in Cathays, and there's a plug at literally every seat.\n\nSmall things: it gets packed after 12 in exam season, so book a study room if you need quiet. The Wi-Fi dropped once during a video call but the staff sorted it in a minute. Also the Cwtch Deal is unbeatable value. Diolch o galon to everyone behind the counter!",
+    "displayName": "Christopher Montgomery-Ashford",
+    "courseYear": "Postgrad",
+    "verified": true,
+    "createdAt": "2023-11-13T22:15:22Z",
+    "status": "pending",
+    "flagged": true,
+    "toxicityScore": 0.612,
+    "toxicityLabels": [
+     "INSULT"
+    ],
+    "moderatedAt": null
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000002",
+    "rating": 1,
+    "tags": [],
+    "comment": "Great coffee, ta xx",
+    "displayName": "Jo",
+    "courseYear": null,
+    "verified": false,
+    "createdAt": "2026-11-12T22:15:02Z",
+    "status": "pending",
+    "flagged": false,
+    "toxicityScore": null,
+    "toxicityLabels": [],
+    "moderatedAt": null
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000003",
+    "rating": 3,
+    "tags": [
+     "fast-wifi"
+    ],
+    "comment": "Wi-Fi's fine but bookmark this: https://example.com/workspaces/cathays/study-groups/q3-revision/docs/9f8e7d6c5b4a?tab=comments&filter=unresolved <script>alert(1)</script> &amp; **bold**",
+    "displayName": "🦊 Fox",
+    "courseYear": "1st year",
+    "verified": false,
+    "createdAt": "2026-10-31T22:15:22Z",
+    "status": "pending",
+    "flagged": false,
+    "toxicityScore": 0.04,
+    "toxicityLabels": [],
+    "moderatedAt": null
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000004",
+    "rating": 4,
+    "tags": [
+     "cosy",
+     "quiet",
+     "friendly-staff"
+    ],
+    "comment": "أفضل مقهى للدراسة في كارديف. The staff are lovely and it's always warm.",
+    "displayName": "نور الهدى عبد الرحمن",
+    "courseYear": "Staff",
+    "verified": true,
+    "createdAt": "2025-12-17T22:15:22Z",
+    "status": "pending",
+    "flagged": false,
+    "toxicityScore": null,
+    "toxicityLabels": [],
+    "moderatedAt": null
+   },
+   {
+    "reviewId": "rv_01WORST000000000000000005",
+    "rating": 5,
+    "tags": [
+     "great-coffee"
+    ],
+    "comment": "Đặng here 👩🏽‍💻 Bổ sung: cà phê ngon, bánh Welsh rất tuyệt vời. Mae'r cacennau cri yn wych!",
+    "displayName": "Đặng Thị Ngọc Hân",
+    "courseYear": "4th year",
+    "verified": false,
+    "createdAt": "2026-11-11T20:15:22Z",
+    "status": "pending",
+    "flagged": false,
+    "toxicityScore": 0.04,
+    "toxicityLabels": [],
+    "moderatedAt": null
+   }
+  ],
+  "nextCursor": "eyJpZCI6InJ2XzAxIn0"
+ },
+ "/api/menu": {
+  "currency": "GBP",
+  "sections": [
+   {
+    "id": "hot-coffee",
+    "title": "Hot coffee",
+    "sizes": {
+     "regular": "240ml",
+     "large": "350ml"
+    },
+    "items": [
+     {
+      "id": "flavoured-latte",
+      "name": "Iced oat-milk salted caramel and vanilla latte with an extra shot",
+      "description": "Double-shot espresso, salted caramel and vanilla syrups, oat milk, cream and a drizzle. Ask for it decaf.",
+      "prices": {
+       "regular": 5000,
+       "large": 5000
+      },
+      "tags": [
+       "V",
+       "VG-available",
+       "GF-available"
+      ],
+      "allergens": [
+       "celery",
+       "gluten",
+       "crustaceans",
+       "egg",
+       "fish",
+       "lupin",
+       "milk",
+       "molluscs",
+       "mustard",
+       "nuts",
+       "peanuts",
+       "sesame",
+       "soya",
+       "sulphites"
+      ],
+      "soldOut": true
+     },
+     {
+      "id": "espresso",
+      "name": "Tea",
+      "prices": {
+       "regular": 0
+      },
+      "tags": [],
+      "allergens": [],
+      "soldOut": false
+     }
+    ]
+   },
+   {
+    "id": "welsh-cakes",
+    "title": "Welsh cakes",
+    "note": "Baked fresh every morning, from 07:00, on a proper bakestone",
+    "offers": [
+     {
+      "label": "Any 3",
+      "price": 300
+     },
+     {
+      "label": "Box of 6",
+      "price": 550
+     },
+     {
+      "label": "Box of 12 for the whole flat",
+      "price": 1000
+     }
+    ],
+    "items": [
+     {
+      "id": "white-chocolate-raspberry",
+      "name": "White chocolate & raspberry",
+      "description": "Sweet and a bit sharp",
+      "prices": {
+       "each": 110
+      },
+      "tags": [
+       "V"
+      ],
+      "allergens": [
+       "gluten",
+       "milk",
+       "egg",
+       "soya"
+      ],
+      "soldOut": true
+     }
+    ]
+   }
+  ],
+  "deals": [
+   {
+    "id": "cwtch-deal",
+    "name": "The Cwtch Deal: any latte-style drink, hot or iced, with two Welsh cakes",
+    "description": "Any regular latte, cappuccino, flat white or flavoured latte, hot or iced, plus 2 Welsh cakes",
+    "price": 480,
+    "normalPrice": {
+     "from": 520,
+     "to": 640
+    },
+    "studentOnly": true,
+    "active": true
+   },
+   {
+    "id": "exam-fuel",
+    "name": "Exam Fuel",
+    "description": "Any large coffee, hot or iced, plus any 3 Welsh cakes",
+    "price": 580,
+    "when": "Exam season only",
+    "studentOnly": true,
+    "active": false
+   }
+  ]
+ },
+ "/api/status": {
+  "level": "packed",
+  "label": "Packed",
+  "message": "Society takeover until 6pm, back room only. Sofas upstairs!",
+  "updatedAt": "2026-11-12T22:15:22Z",
+  "open": true,
+  "hoursToday": {
+   "opens": "08:00",
+   "closes": "21:00"
+  }
+ },
+ "/api/admin/bookings": {
+  "date": "2026-11-12",
+  "bookings": [
+   {
+    "reference": "CC-7F3K9Q",
+    "type": "group",
+    "classKind": null,
+    "time": "08:00",
+    "partySize": 20,
+    "name": "Christopher Alexander Montgomery III, Treasurer of the Cardiff Welsh Society",
+    "email": "bartholomew.fitzgerald@northwind-industries-holdings.example.com",
+    "society": "Cardiff University Welsh Language and Culture Society (Cymdeithas Gymraeg)",
+    "notes": "Two wheelchair users, so the ground floor please.\n\nWe'll bring a cake for a 21st birthday, and need a plug for the projector. Can we pay for drinks on one bill? Diolch!"
+   },
+   {
+    "reference": "CC-ABCDEF",
+    "type": "class",
+    "classKind": "latte-art",
+    "time": "10:00",
+    "partySize": 1,
+    "name": "J",
+    "email": "a@b.co",
+    "society": null,
+    "notes": null
+   },
+   {
+    "reference": "CC-ZZZZZZ",
+    "type": "room",
+    "classKind": null,
+    "time": "14:00",
+    "partySize": 6,
+    "name": "Aleksandra Wiśniewska-Kowalczyk",
+    "email": "first.last+billing-notifications@example.com",
+    "society": null,
+    "notes": "<script>alert(1)</script> &amp;"
+   }
+  ]
+ }
+}

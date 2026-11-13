@@ -1,0 +1,1646 @@
+[
+ {
+  "name": "cafe-warm",
+  "group": "hero",
+  "aspect": "16:9",
+  "focus": [
+   0.5,
+   0.55
+  ],
+  "zoom": 1.0,
+  "widths": [
+   960,
+   1440,
+   1920
+  ],
+  "alt": "A warm café corner with a leather bench, plants and big windows",
+  "src": "https://images.unsplash.com/photo-1522126039546-182129aa0b93?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Ian Valerio",
+   "author_url": "https://unsplash.com/@iangvalerio",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/m5D5dHWHfSk",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cafe-warm-tall",
+  "group": "hero",
+  "aspect": "4:5",
+  "focus": [
+   0.42,
+   0.55
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   720,
+   960
+  ],
+  "alt": "A warm café corner with a leather bench, plants and big windows",
+  "src": "https://images.unsplash.com/photo-1522126039546-182129aa0b93?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Ian Valerio",
+   "author_url": "https://unsplash.com/@iangvalerio",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/m5D5dHWHfSk",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "espresso",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Espresso pouring from a machine into a cup",
+  "src": "https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Scott K",
+   "author_url": "https://unsplash.com/@sizzle_king",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/YkS-mhaOjLI",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "americano",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A black americano in a glass cup on a wooden table",
+  "src": "https://images.unsplash.com/photo-1580661869408-55ab23f2ca6e?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Christina DiBernardo",
+   "author_url": "https://unsplash.com/@cdib925",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/MXXTl3Cj2Og",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "flat-white",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A flat white with heart latte art, from above, on dark wood",
+  "src": "https://images.unsplash.com/photo-1611564494260-6f21b80af7ea?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Robbie Down",
+   "author_url": "https://unsplash.com/@robbiedown",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/LI8inyHnm_A",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A latte with leaf latte art on a round wooden table",
+  "src": "https://images.unsplash.com/photo-1760163178873-7644a924519e?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "nameless 3791",
+   "author_url": "https://unsplash.com/@unidentifieduser",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/T3fFz5W0Foc",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cappuccino",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A cappuccino dusted with cocoa",
+  "src": "https://images.unsplash.com/photo-1777013486360-699af7c80ff3?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "T",
+   "author_url": "https://unsplash.com/@tanyabarrow",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/UWidxu7nZNg",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "mocha",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A mocha with latte art in a dark cup",
+  "src": "https://images.unsplash.com/photo-1632845407875-10b4d85e6bf8?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Koushik Pal",
+   "author_url": "https://unsplash.com/@koushikpal",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/C_vE8ZIHJ3Y",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "flavoured-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A caramel latte in a white cup",
+  "src": "https://images.unsplash.com/photo-1761783768352-e7f42bfa9988?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Steph Quernemoen",
+   "author_url": "https://unsplash.com/@stephjq",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/IHR3-sOUcT0",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "chai-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A chai latte from above with star anise and a cinnamon stick",
+  "src": "https://images.unsplash.com/photo-1555251415-4716d9d0b8af?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Mae Mu",
+   "author_url": "https://unsplash.com/@picoftasty",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/eNfR6MUyjBI",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "hot-chocolate",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A hot chocolate topped with marshmallows",
+  "src": "https://images.unsplash.com/photo-1637572815755-c4b80092dce1?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Elena Leya",
+   "author_url": "https://unsplash.com/@foodistika",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/NtmNhrdfs-o",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced latte with the milk swirling through the coffee",
+  "src": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Nathan Dumlao",
+   "author_url": "https://unsplash.com/@nate_dumlao",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/vZOZJH_xkUk",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-americano",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced americano in a glass full of ice",
+  "src": "https://images.unsplash.com/photo-1581996323441-538096e854b9?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Mayur",
+   "author_url": "https://unsplash.com/@mayurpixamind",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/vP9TjdIm9fE",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-flavoured-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced latte with layers of milk and coffee and a metal straw",
+  "src": "https://images.unsplash.com/photo-1764298490445-6add12301888?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Winston Chen",
+   "author_url": "https://unsplash.com/@winstonchen",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/nIZl9PuwMXk",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-mocha",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced mocha with a straw on a wooden table",
+  "src": "https://images.unsplash.com/photo-1578314675325-450f4ea07f4e?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Rachel McDermott",
+   "author_url": "https://unsplash.com/@mrsrachelmcdermott",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/c7ceNXAOIh0",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cold-brew",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A glass of cold brew coffee over ice against a golden background",
+  "src": "https://images.unsplash.com/photo-1561641377-f7456d23aa9b?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Wade Austin Ellis",
+   "author_url": "https://unsplash.com/@wadeaustinellis",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/yN7prWLW7xg",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-chai-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced chai latte in a tall glass with a black straw",
+  "src": "https://images.unsplash.com/photo-1604959807242-9eb8fd0b5bfa?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Claire Kelly",
+   "author_url": "https://unsplash.com/@claire_k",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/Qpznf5NFfDE",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "iced-matcha-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An iced matcha latte with green tea layered over milk",
+  "src": "https://images.unsplash.com/photo-1717603545758-88cc454db69b?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Olena Bohovyk",
+   "author_url": "https://unsplash.com/@olenkasergienko",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/N1rmKN_EOaA",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "builders-tea",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A strong cup of tea with milk, from above",
+  "src": "https://images.unsplash.com/photo-1634299406775-90f32b656536?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "VD Photography",
+   "author_url": "https://unsplash.com/@vdphotography",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/vubtoFtT7-s",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "herbal-tea",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Herbal tea brewing in a glass teapot",
+  "src": "https://images.unsplash.com/photo-1547825407-2d060104b7f8?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Massimo Rinaldi",
+   "author_url": "https://unsplash.com/@massimorinaldi27",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/FmgZ5xzDG-s",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "matcha-latte",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A matcha latte with leaf latte art",
+  "src": "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Jason Leung",
+   "author_url": "https://unsplash.com/@ninjason",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/Z-hvocTfR_s",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "orange-juice",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A glass of fresh orange juice",
+  "src": "https://images.unsplash.com/photo-1707569517904-92b134ff5f69?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "The Design Lady",
+   "author_url": "https://unsplash.com/@sarah35",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/9iQhRbTXU3c",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "sparkling-water",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A glass of sparkling water on a table",
+  "src": "https://images.unsplash.com/photo-1555704574-a9cfdfab06e0?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "joah brown",
+   "author_url": "https://unsplash.com/@joahbrown_",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/N59Vi1H8-zU",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "welsh-closeup",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.55,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Sugar-dusted Welsh cakes with currants, close up",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg/1920px-Closeup_of_Welsh_cakes%2C_February_2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg",
+  "credit": {
+   "author": "zingyyellow...wish I could bend space/time",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Closeup_of_Welsh_cakes,_February_2009.jpg",
+   "title": "Closeup of Welsh cakes, February 2009.jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-closeup-b",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.32,
+   0.42
+  ],
+  "zoom": 1.8,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Welsh cakes dusted with sugar",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg/1920px-Closeup_of_Welsh_cakes%2C_February_2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg",
+  "credit": {
+   "author": "zingyyellow...wish I could bend space/time",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Closeup_of_Welsh_cakes,_February_2009.jpg",
+   "title": "Closeup of Welsh cakes, February 2009.jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-stand",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.6
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A pile of Welsh cakes on a cake stand",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Welsh_cakes_%288772947062%29.jpg/1920px-Welsh_cakes_%288772947062%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/3/31/Welsh_cakes_%288772947062%29.jpg",
+  "credit": {
+   "author": "James Petts",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes_(8772947062).jpg",
+   "title": "Welsh cakes (8772947062).jpg",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-stand-b",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.38,
+   0.62
+  ],
+  "zoom": 1.7,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Welsh cakes on a cake stand",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Welsh_cakes_%288772947062%29.jpg/1920px-Welsh_cakes_%288772947062%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/3/31/Welsh_cakes_%288772947062%29.jpg",
+  "credit": {
+   "author": "James Petts",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes_(8772947062).jpg",
+   "title": "Welsh cakes (8772947062).jpg",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-stand-tall",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.4
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Welsh cakes stacked on a tiered stand",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Welsh_cakes_%288768378691%29.jpg/1920px-Welsh_cakes_%288768378691%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/5/51/Welsh_cakes_%288768378691%29.jpg",
+  "credit": {
+   "author": "James Petts",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes_(8768378691).jpg",
+   "title": "Welsh cakes (8768378691).jpg",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-bakestone",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Rows of Welsh cakes cooking on a bake stone",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Welsh_cakes_on_a_bake_stone.jpg/1920px-Welsh_cakes_on_a_bake_stone.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Welsh_cakes_on_a_bake_stone.jpg",
+  "credit": {
+   "author": "Vouliagmeni",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes_on_a_bake_stone.jpg",
+   "title": "Welsh cakes on a bake stone.jpg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-tin",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Golden Welsh cakes in a tin",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Welsh_cakes2.jpg/1920px-Welsh_cakes2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/9/97/Welsh_cakes2.jpg",
+  "credit": {
+   "author": "Moochocoogle at English Wikipedia",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes2.jpg",
+   "title": "Welsh cakes2.jpg",
+   "license": "Public domain",
+   "license_url": "https://en.wikipedia.org/wiki/Public_domain",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-tin-b",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.66,
+   0.5
+  ],
+  "zoom": 1.8,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Welsh cakes in a tin lined with paper",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Welsh_cakes2.jpg/1920px-Welsh_cakes2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/9/97/Welsh_cakes2.jpg",
+  "credit": {
+   "author": "Moochocoogle at English Wikipedia",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes2.jpg",
+   "title": "Welsh cakes2.jpg",
+   "license": "Public domain",
+   "license_url": "https://en.wikipedia.org/wiki/Public_domain",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-pile",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.4
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A pile of freshly made Welsh cakes",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Welsh_hewa_cakes.jpg/1920px-Welsh_hewa_cakes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Welsh_hewa_cakes.jpg",
+  "credit": {
+   "author": "Caitlin",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_hewa_cakes.jpg",
+   "title": "Welsh hewa cakes.jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "welsh-pile-b",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.72
+  ],
+  "zoom": 1.7,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Freshly made Welsh cakes",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Welsh_hewa_cakes.jpg/1920px-Welsh_hewa_cakes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Welsh_hewa_cakes.jpg",
+  "credit": {
+   "author": "Caitlin",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_hewa_cakes.jpg",
+   "title": "Welsh hewa cakes.jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "bara-brith",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A loaf of bara brith with a slice cut",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Bara_Brith_%283320696816%29.jpg/1920px-Bara_Brith_%283320696816%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Bara_Brith_%283320696816%29.jpg",
+  "credit": {
+   "author": "zingyyellow...!",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Bara_Brith_(3320696816).jpg",
+   "title": "Bara Brith (3320696816).jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "ham-cheese-toastie",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A toastie pulled apart with melted cheese stretching",
+  "src": "https://images.unsplash.com/photo-1639744093483-86714cd62a3b?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Jay Gajjar",
+   "author_url": "https://unsplash.com/@jaygajjar",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/9bsNSwZZMN8",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "leek-cheese-toastie",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Grilled cheese toastie triangles on a plate",
+  "src": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Pixzolo Photography",
+   "author_url": "https://unsplash.com/@pixzolo",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/BiWb1Y8wpZk",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "plant-milk",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Plant milk being poured into a glass",
+  "src": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Eiliv Aceron",
+   "author_url": "https://unsplash.com/@shootdelicious",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/_8bnn1GqX70",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "extra-shot",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "An espresso shot running into a glass",
+  "src": "https://images.unsplash.com/photo-1524686788093-aa1f9c0f7c4f?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Tim St. Martin",
+   "author_url": "https://unsplash.com/@timeighty5",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/IjnAc0vyqGs",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "syrup",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "Syrup being poured into an iced coffee",
+  "src": "https://images.unsplash.com/photo-1632277670744-e1398a1059a6?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "pariwat pannium",
+   "author_url": "https://unsplash.com/@pariwatt",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/MI-xngNm8B4",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cream-marshmallows",
+  "group": "menu",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   480,
+   800
+  ],
+  "alt": "A hot chocolate with marshmallows and chocolate drizzle",
+  "src": "https://images.unsplash.com/photo-1546980964-e3c8bfef49b9?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Aliona Gumeniuk",
+   "author_url": "https://unsplash.com/@agumeniuk",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/RTtMzY31DeI",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "chocolate-chips",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Chocolate chips",
+  "src": "https://images.unsplash.com/photo-1585502866757-30ae9e509e31?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Anton",
+   "author_url": "https://unsplash.com/@uniqueton",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/jgcdPKkEcy4",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "white-chocolate",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "White chocolate",
+  "src": "https://images.unsplash.com/photo-1700411360138-1bd3d70ca291?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Catia Climovich",
+   "author_url": "https://unsplash.com/@catiaclimovich",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/JXaAGDK3xEw",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "dark-chocolate",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Chopped dark chocolate",
+  "src": "https://images.unsplash.com/photo-1591798153699-4b0bd9d57e79?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Juliette G.",
+   "author_url": "https://unsplash.com/@julietteg",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/JBMCp1MsLrQ",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "raspberries",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Raspberries",
+  "src": "https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Zach Inglis",
+   "author_url": "https://unsplash.com/@zachinglis",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/t0A2NCMhXRQ",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "lemon-blueberry",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Blueberries and lemons",
+  "src": "https://images.unsplash.com/photo-1610450623726-90b350bb4545?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Julia Topp",
+   "author_url": "https://unsplash.com/@jules_eatrunhike",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/EaPX1LooRCo",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cinnamon",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Cinnamon sticks",
+  "src": "https://images.unsplash.com/photo-1758657996518-e67bd328854e?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Neil P-A",
+   "author_url": "https://unsplash.com/@weareqed",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/sQjNAZE-W6s",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "caramel",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Salted caramel pieces",
+  "src": "https://images.unsplash.com/photo-1652125315903-f593f65e5d50?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "taylor gregory",
+   "author_url": "https://unsplash.com/@taylorngregory",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/AAl94FsLdHA",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "pumpkin",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "A pumpkin",
+  "src": "https://images.unsplash.com/photo-1632580793012-6719368b4560?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Megan Lee",
+   "author_url": "https://unsplash.com/@meganlee007",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/54ktuyCqutQ",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "jam",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Strawberry jam",
+  "src": "https://images.unsplash.com/photo-1552503983-37e5802c2cf3?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "jonathan ocampo",
+   "author_url": "https://unsplash.com/@johnophoto",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/NuZDBEeY2PQ",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "leeks",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Welsh leeks",
+  "src": "https://images.unsplash.com/photo-1737507844233-9bad00475be8?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Maciej Karoń",
+   "author_url": "https://unsplash.com/@maciejka_dslr",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/EyY4oLBJu3E",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "welsh-cakes-round",
+  "group": "flavour",
+  "aspect": "1:1",
+  "focus": [
+   0.55,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   160,
+   320
+  ],
+  "alt": "Welsh cakes",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg/1920px-Closeup_of_Welsh_cakes%2C_February_2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/4/45/Closeup_of_Welsh_cakes%2C_February_2009.jpg",
+  "credit": {
+   "author": "zingyyellow...wish I could bend space/time",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Closeup_of_Welsh_cakes,_February_2009.jpg",
+   "title": "Closeup of Welsh cakes, February 2009.jpg",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "study-room",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A glass-walled study room with a long table and a green wall",
+  "src": "https://images.unsplash.com/photo-1638786246810-39870f0e77d9?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Mindspace Studio",
+   "author_url": "https://unsplash.com/@mindspacestudio",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/AEY64H3pQEo",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "group-table",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "Long wooden tables in a bright café",
+  "src": "https://images.unsplash.com/photo-1544031064-9de80864ade5?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Janosch Lino",
+   "author_url": "https://unsplash.com/@janoschlino",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/k6w8miMpfUI",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "society-night",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A warm café dining room with a long table and plants",
+  "src": "https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Dmitrii Filatov",
+   "author_url": "https://unsplash.com/@dmitrii_filatov",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/j6ERcKXdlXw",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "latte-art-class",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "Milk being poured into a cup to make latte art",
+  "src": "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Fahmi Fakhrudin",
+   "author_url": "https://unsplash.com/@fahmipaping",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/nzyzAUsbV0M",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "baking-class",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.45,
+   0.45
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "Hands cutting Welsh cakes out of dough with a round cutter",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Welsh_cake_being_punched_out.jpg/1920px-Welsh_cake_being_punched_out.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/6/66/Welsh_cake_being_punched_out.jpg",
+  "credit": {
+   "author": "Assassas77",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cake_being_punched_out.jpg",
+   "title": "Welsh cake being punched out.jpg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "bakestone",
+  "group": "places",
+  "aspect": "3:2",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024,
+   1600
+  ],
+  "alt": "Welsh cakes cooking on a bake stone",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Welsh_cakes_on_a_bake_stone.jpg/1920px-Welsh_cakes_on_a_bake_stone.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Welsh_cakes_on_a_bake_stone.jpg",
+  "credit": {
+   "author": "Vouliagmeni",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_cakes_on_a_bake_stone.jpg",
+   "title": "Welsh cakes on a bake stone.jpg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "students-cafe",
+  "group": "places",
+  "aspect": "3:2",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024,
+   1600
+  ],
+  "alt": "People working at tables in a warm café",
+  "src": "https://images.unsplash.com/photo-1751199199822-c61b8bb7101b?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Zoshua Colah",
+   "author_url": "https://unsplash.com/@zoshuacolah",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/PnJ99wKe-o0",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "night-study",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A candle, an open notebook and a laptop at night",
+  "src": "https://images.unsplash.com/photo-1769794370990-614f765fa360?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Yen Vu - 烟雨",
+   "author_url": "https://unsplash.com/@yenvu2410",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/WroKnBdKWSI",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "rainy-window",
+  "group": "places",
+  "aspect": "3:2",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024,
+   1600
+  ],
+  "alt": "Looking out of a café window onto a rainy street",
+  "src": "https://images.unsplash.com/photo-1571064492294-17e8c2fac904?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Alicja Gancarz",
+   "author_url": "https://unsplash.com/@alisonstardust",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/jqzBm-v351Y",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "cardiff-bay",
+  "group": "places",
+  "aspect": "3:2",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024,
+   1600
+  ],
+  "alt": "The Wales Millennium Centre in Cardiff Bay",
+  "src": "https://images.unsplash.com/photo-1623493802068-af819642f12b?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Jonny Gios",
+   "author_url": "https://unsplash.com/@supergios",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/SQQ81UjpoW4",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "open-mic",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "An audience watching a singer at an open mic night",
+  "src": "https://images.unsplash.com/photo-1766509805884-f35e8d9089d4?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Atul Pandey",
+   "author_url": "https://unsplash.com/@iatulp",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/tcLQzsWKU6g",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "quiz-night",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A cup of tea surrounded by fairy lights",
+  "src": "https://images.unsplash.com/photo-1623671100579-c85271acc4ae?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Inspo",
+   "author_url": "https://unsplash.com/@get_inspo",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/MpPE6nRxfH0",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "tea-and-welsh-cakes",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "Tea for two with Welsh cakes on a café table",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Welsh_Cakes_at_Senedd_Cymru.jpg/1920px-Welsh_Cakes_at_Senedd_Cymru.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Welsh_Cakes_at_Senedd_Cymru.jpg",
+  "credit": {
+   "author": "Dn9ahx",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Welsh_Cakes_at_Senedd_Cymru.jpg",
+   "title": "Welsh Cakes at Senedd Cymru.jpg",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "changes": "cropped and resized"
+  }
+ },
+ {
+  "name": "study-desk",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A laptop, notebook and black coffee on a wooden desk, from above",
+  "src": "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "ian dooley",
+   "author_url": "https://unsplash.com/@sadswim",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/DJ7bWa-Gwks",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "byo-cup",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A hand holding a reusable coffee cup outdoors",
+  "src": "https://images.unsplash.com/photo-1759989962982-8d2e91c9072d?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Maria Gunasekara",
+   "author_url": "https://unsplash.com/@mazi_07123",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/8DA-9dyepls",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ },
+ {
+  "name": "coffee-beans",
+  "group": "places",
+  "aspect": "4:3",
+  "focus": [
+   0.5,
+   0.5
+  ],
+  "zoom": 1.0,
+  "widths": [
+   640,
+   1024
+  ],
+  "alt": "A cup of coffee on a bed of roasted coffee beans",
+  "src": "https://images.unsplash.com/photo-1611691934391-5a8805e0bd1a?w=2400&q=85&fm=jpg",
+  "credit": {
+   "author": "Craig McKay",
+   "author_url": "https://unsplash.com/@ccmckay91",
+   "source": "Unsplash",
+   "page": "https://unsplash.com/photos/p3dGOGBFbP4",
+   "license": "Unsplash License",
+   "license_url": "https://unsplash.com/license"
+  }
+ }
+]

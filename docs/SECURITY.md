@@ -53,11 +53,25 @@ Terraform builds the Cognito address from the user pool's domain (`infra/cognito
 | CSS in `.css` files under `/css/` | `<style>` blocks or `style=""` attributes in HTML |
 | JS changing `element.style` or classes | `eval()`, `new Function()`, `innerHTML` with any user data |
 | Fonts self-hosted as `.woff2` | Google Fonts, Adobe Fonts or any font CDN |
-| Images self-hosted as WebP or SVG in `/img/` | Images hot-linked from Unsplash, Pexels or anywhere else |
+| Images self-hosted in `/img/` (WebP photos; JPG/PNG only for the link preview and phone icon) | Images hot-linked from Unsplash, Pexels or anywhere else |
 | `fetch('/api/...')` on the same domain | Calling any other API from the browser (except the Cognito token exchange) |
 | The admin login redirecting to Cognito's hosted page | Embedding anything in an `<iframe>` |
 
 **Showing user content (reviews, names):** always insert it with `textContent`, never `innerHTML`. Then even a review containing `<script>` is shown as plain text.
+
+### How the website meets these rules (Phase 7)
+- **No inline code at all.** Every page loads `/css/site.css` and `/js/*.js` files only. GitHub Actions refuses to deploy if an HTML file contains a `<script>` block, a `<style>` block, a `style=""` attribute or an `onclick=""`-style handler. Every page was loaded on the live site with the real CSP: **0 console errors**.
+- **No `innerHTML` anywhere.** Pages are built with a small `h()` helper that creates DOM nodes and puts text in with `textContent`. A review containing `<script>alert(1)</script>` was shown on screen as exactly that text (the worst-case test data in `scripts/ui-fixtures/`).
+- **Self-hosted everything.** Fonts (Fraunces and DM Sans, SIL Open Font Licence) are `.woff2` files in `/fonts/`. All 67 photos are WebP files in `/img/`, downloaded once and credited on the About page. The browser never contacts Unsplash, Google Fonts or any CDN.
+- **Explicit file types.** `scripts/deploy_site.sh` uploads each kind of file with a fixed `Content-Type`. The AWS CLI otherwise guesses from the operating system, and with `X-Content-Type-Options: nosniff` a wrong guess (a JavaScript module sent as `binary/octet-stream`) would stop the page working. Pages, CSS and JavaScript are sent with `Cache-Control: no-cache`, so a deploy is never half-old, half-new in someone's browser.
+- **Clean addresses at the edge.** A CloudFront Function (`infra/functions/pretty-urls.js`) serves `/menu/` from `menu/index.html` and redirects `/menu` to `/menu/`. It only runs on page requests, never on `/api/*`, and the bucket stays private.
+- **Nothing personal kept in the browser.** The booking confirmation reads its details from the address bar (reference, date, time, size: no name or email), and checks them, because anyone can edit an address. The only thing saved with `localStorage` is the visitor's colour choice (light, dark or auto).
+
+### The admin page's login (Phase 7)
+- **Authorization code flow with PKCE**, in the browser, against Cognito's managed login. The page creates a one-time secret (the PKCE verifier) and a random `state` for every login, and rejects a returning login whose `state` doesn't match. A stolen login code is useless without the verifier, and a forged login link is refused.
+- **Tokens live in `sessionStorage` only**, so they disappear when the tab closes. The strict CSP is what stops injected scripts from reading them. The login code is removed from the address bar straight after it's used.
+- **Short-lived access, quiet refresh.** The access token lasts 60 minutes; the page refreshes it at Cognito a minute before it expires, and if anything is refused it asks for a fresh login. **Logging out revokes the refresh token** at Cognito (token revocation is on), then ends the Cognito session.
+- **The page is only a front end.** It isn't linked from the site and isn't indexed (`noindex`), but that's tidiness, not security: every admin request is checked by API Gateway's JWT authorizer and again by the admin Lambda (section 3), so editing the page gives no extra power.
 
 ---
 
