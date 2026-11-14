@@ -545,15 +545,14 @@ export const PHOTOS = {
   ],
   "alt": "Looking out of a café window onto a rainy street"
  },
- "cardiff-bay": {
+ "student-life-centre": {
   "group": "places",
   "aspect": "3:2",
   "widths": [
    640,
-   1024,
-   1600
+   960
   ],
-  "alt": "The Wales Millennium Centre in Cardiff Bay"
+  "alt": "Cardiff University's Centre for Student Life, home of the Students' Union, on Park Place in Cathays"
  },
  "open-mic": {
   "group": "places",

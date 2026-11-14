@@ -1473,7 +1473,7 @@
   }
  },
  {
-  "name": "cardiff-bay",
+  "name": "student-life-centre",
   "group": "places",
   "aspect": "3:2",
   "focus": [
@@ -1483,18 +1483,19 @@
   "zoom": 1.0,
   "widths": [
    640,
-   1024,
-   1600
+   960
   ],
-  "alt": "The Wales Millennium Centre in Cardiff Bay",
-  "src": "https://images.unsplash.com/photo-1623493802068-af819642f12b?w=2400&q=85&fm=jpg",
+  "alt": "Cardiff University's Centre for Student Life, home of the Students' Union, on Park Place in Cathays",
+  "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Canolfan_Bywyd_Myfyrwyr_Caerdydd_%284%29.jpg/960px-Canolfan_Bywyd_Myfyrwyr_Caerdydd_%284%29.jpg",
+  "fallback": "https://upload.wikimedia.org/wikipedia/commons/3/33/Canolfan_Bywyd_Myfyrwyr_Caerdydd_%284%29.jpg",
   "credit": {
-   "author": "Jonny Gios",
-   "author_url": "https://unsplash.com/@supergios",
-   "source": "Unsplash",
-   "page": "https://unsplash.com/photos/SQQ81UjpoW4",
-   "license": "Unsplash License",
-   "license_url": "https://unsplash.com/license"
+   "author": "Sionk",
+   "source": "Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Canolfan_Bywyd_Myfyrwyr_Caerdydd_(4).jpg",
+   "title": "Canolfan Bywyd Myfyrwyr Caerdydd (4).jpg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "changes": "cropped and resized"
   }
  },
  {

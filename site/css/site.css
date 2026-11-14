@@ -456,6 +456,12 @@ button { font: inherit; color: inherit; }
 .footer-base strong { color: var(--ink-2); }
 .footer-base a { color: var(--muted); }
 @media (hover: hover) and (pointer: fine) { .footer-grid a:hover { color: var(--accent); } }
+/* Touch screens: taller footer links, so each tap target is at least 24px high (WCAG 2.2) */
+@media (pointer: coarse) {
+  .footer-grid ul { gap: 0; }
+  .footer-grid ul a { display: inline-block; padding-block: 6px; }
+  .footer-base a { display: inline-block; padding-block: 4px; }
+}
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
@@ -757,7 +763,9 @@ fieldset > legend { padding: 0; margin-bottom: 8px; }
   -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
   border-bottom: 1px solid var(--line);
 }
-.menu-bar .wrap { display: grid; gap: 10px; }
+/* minmax(0, 1fr): without it the grid column grows to fit the no-wrap chip rows,
+   so the page gets wider than a phone screen and can be pinch-zoomed out */
+.menu-bar .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .filter-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .filter-row .label { font-size: 0.86rem; font-weight: 700; color: var(--muted); }
 .menu-section { padding-top: clamp(32px, 5vw, 56px); }
@@ -884,7 +892,11 @@ fieldset > legend { padding: 0; margin-bottom: 8px; }
 }
 
 /* --- Additions: review rows, small icons in tags, skeleton bars --- */
-.review-row { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); align-items: start; }
+.review-row { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); align-items: stretch; }
+/* Home page previews: same-height cards, long reviews cut at 5 lines (the Reviews page shows them in full;
+   screen readers still get the whole text, it's only clipped visually) */
+.review-row .review { align-content: start; }
+.review-row .review .quote { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden; }
 .tag svg { width: 13px; height: 13px; }
 .item .body .skeleton { height: 18px; }
 .item .body .skeleton + .skeleton { width: 55%; }

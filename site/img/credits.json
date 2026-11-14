@@ -553,14 +553,15 @@
   "license": "Unsplash License",
   "license_url": "https://unsplash.com/license"
  },
- "cardiff-bay": {
-  "alt": "The Wales Millennium Centre in Cardiff Bay",
-  "author": "Jonny Gios",
-  "author_url": "https://unsplash.com/@supergios",
-  "source": "Unsplash",
-  "page": "https://unsplash.com/photos/SQQ81UjpoW4",
-  "license": "Unsplash License",
-  "license_url": "https://unsplash.com/license"
+ "student-life-centre": {
+  "alt": "Cardiff University's Centre for Student Life, home of the Students' Union, on Park Place in Cathays",
+  "author": "Sionk",
+  "source": "Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Canolfan_Bywyd_Myfyrwyr_Caerdydd_(4).jpg",
+  "title": "Canolfan Bywyd Myfyrwyr Caerdydd (4).jpg",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "changes": "cropped and resized"
  },
  "open-mic": {
   "alt": "An audience watching a singer at an open mic night",
